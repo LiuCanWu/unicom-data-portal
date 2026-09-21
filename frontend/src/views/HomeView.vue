@@ -2,9 +2,13 @@
   <main class="home-page">
     <section class="hero">
       <div class="hero-content">
-        <p class="eyebrow">Unicom Data Portal</p>
+        <p class="eyebrow">
+          Unicom Data Portal
+        </p>
 
-        <h1>联通数据智能产品门户</h1>
+        <h1>
+          联通数据智能产品门户
+        </h1>
 
         <p class="subtitle">
           汇聚数据基础设施、数据生产治理、数据分析智能与数据流通能力，
@@ -20,12 +24,62 @@
             体验中心
           </el-button>
         </div>
+
+        <div class="service-status">
+          <span class="status-label">
+            后端服务：
+          </span>
+
+          <el-tag
+            v-if="backendStatus === 'ok'"
+            type="success"
+          >
+            正常
+          </el-tag>
+
+          <el-tag
+            v-else-if="backendStatus === 'loading'"
+            type="info"
+          >
+            检测中
+          </el-tag>
+
+          <el-tag
+            v-else
+            type="danger"
+          >
+            异常
+          </el-tag>
+        </div>
       </div>
     </section>
   </main>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
+
+import { getHealth } from '../api/health'
+
+const backendStatus = ref<'loading' | 'ok' | 'error'>('loading')
+
+async function checkBackendHealth() {
+  try {
+    const response = await getHealth()
+
+    if (response.data.status === 'ok') {
+      backendStatus.value = 'ok'
+    } else {
+      backendStatus.value = 'error'
+    }
+  } catch (error) {
+    backendStatus.value = 'error'
+  }
+}
+
+onMounted(() => {
+  checkBackendHealth()
+})
 </script>
 
 <style scoped>
@@ -40,8 +94,16 @@
   justify-content: center;
   padding: 80px 24px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(64, 158, 255, 0.16), transparent 32%),
-    linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(64, 158, 255, 0.16),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #f7faff 0%,
+      #ffffff 100%
+    );
 }
 
 .hero-content {
@@ -77,6 +139,18 @@ h1 {
   display: flex;
   gap: 16px;
   margin-top: 40px;
+}
+
+.service-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.status-label {
+  font-size: 14px;
+  color: #86909c;
 }
 
 @media (max-width: 768px) {
