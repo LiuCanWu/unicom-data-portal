@@ -16,11 +16,37 @@
         </p>
 
         <div class="hero-actions">
-          <el-button type="primary" size="large">
+
+          <div class="quick-links">
+            <router-link to="/products">
+              产品中心
+            </router-link>
+
+            <router-link to="/experience">
+              体验中心
+            </router-link>
+
+            <router-link to="/solutions">
+              解决方案
+            </router-link>
+
+            <router-link to="/about">
+              关于我们
+            </router-link>
+          </div>
+
+          <el-button 
+          type="primary"
+          size="large"
+          @click="$router.push('/products')"
+          >
             探索产品
           </el-button>
 
-          <el-button size="large">
+          <el-button 
+          size="large"
+          @click="$router.push('/experience')"
+          >
             体验中心
           </el-button>
         </div>
@@ -83,6 +109,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.quick-links a {
+  color: #409eff;
+  font-size: 15px;
+}
+
 .home-page {
   min-height: 100vh;
 }
