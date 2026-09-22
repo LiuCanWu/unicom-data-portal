@@ -1,3 +1,38 @@
+:root {
+  /* Brand */
+  --color-primary: #1677ff;
+  --color-primary-hover: #4096ff;
+
+  /* Text */
+  --color-text-primary: #1d2129;
+  --color-text-secondary: #4e5969;
+  --color-text-tertiary: #86909c;
+
+  /* Background */
+  --color-bg-page: #ffffff;
+  --color-bg-light: #f7f8fa;
+  --color-bg-soft: #f3f6fb;
+
+  /* Border */
+  --color-border: #e5e6eb;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --header-height: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Shadow */
+  --shadow-card:
+    0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* Spacing */
+  --page-padding-x: 24px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -16,6 +51,8 @@ html {
 }
 
 body {
+  margin: 0;
+
   font-family:
     Inter,
     "PingFang SC",
@@ -23,8 +60,8 @@ body {
     Arial,
     sans-serif;
 
-  color: #1d2129;
-  background: #ffffff;
+  color: var(--color-text-primary);
+  background: var(--color-bg-page);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,4 +81,17 @@ a {
 
 img {
   max-width: 100%;
+}
+
+.page-container {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding-left: var(--page-padding-x);
+  padding-right: var(--page-padding-x);
+}
+
+.page-section {
+  padding-top: 80px;
+  padding-bottom: 80px;
 }

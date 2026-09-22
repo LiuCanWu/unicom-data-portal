@@ -16,25 +16,6 @@
         </p>
 
         <div class="hero-actions">
-
-          <div class="quick-links">
-            <router-link to="/products">
-              产品中心
-            </router-link>
-
-            <router-link to="/experience">
-              体验中心
-            </router-link>
-
-            <router-link to="/solutions">
-              解决方案
-            </router-link>
-
-            <router-link to="/about">
-              关于我们
-            </router-link>
-          </div>
-
           <el-button 
           type="primary"
           size="large"
@@ -126,7 +107,9 @@ onMounted(() => {
 }
 
 .hero {
-  min-height: 640px;
+  min-height: calc(
+    100vh - var(--header-height)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
