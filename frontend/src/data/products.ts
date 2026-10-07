@@ -437,7 +437,7 @@ export const products: Product[] = [
       '数据安全',
     ],
 
-    featured: false,
+    featured: true,
 
     order: 7,
 
@@ -489,10 +489,36 @@ export const products: Product[] = [
       '数据运营',
     ],
 
-    featured: false,
+    featured: true,
 
     order: 8,
 
     status: 'coming-soon',
   },
 ]
+
+
+
+export function getProductBySlug(
+  slug: string,
+): Product | undefined {
+  return products.find(
+    product => product.slug === slug,
+  )
+}
+
+
+export function getFeaturedProducts(): Product[] {
+  return products
+    .filter(product => product.featured)
+    .sort((a, b) => a.order - b.order)
+}
+
+
+export function getProductsByCategory(
+  category: Product['category'],
+): Product[] {
+  return products
+    .filter(product => product.category === category)
+    .sort((a, b) => a.order - b.order)
+}
