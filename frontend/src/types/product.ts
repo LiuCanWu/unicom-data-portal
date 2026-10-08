@@ -18,6 +18,18 @@ export interface ProductScenario {
 }
 
 
+export interface ProductAdvantage {
+  title: string
+  description: string
+}
+
+
+export interface ProductValue {
+  title: string
+  description: string
+}
+
+
 export interface ProductLink {
   label: string
   url: string
@@ -28,86 +40,43 @@ export interface ProductLink {
 export interface Product {
   id: string
 
-  /**
-   * URL 使用
-   * example:
-   * /products/lakehouse
-   */
   slug: string
 
-  /**
-   * 产品正式名称
-   */
   name: string
 
-  /**
-   * 产品简称，可选
-   */
   shortName?: string
 
-  /**
-   * 所属产品家族
-   */
   category: ProductCategory
 
-  /**
-   * 首页或卡片上的一句话定位
-   */
   tagline: string
 
-  /**
-   * 产品详细简介
-   */
   description: string
 
-  /**
-   * 产品核心能力
-   */
+  values?: ProductValue[]
+
   features: ProductFeature[]
 
-  /**
-   * 典型应用场景
-   */
   scenarios: ProductScenario[]
 
-  /**
-   * 产品关键词
-   */
+  advantages?: ProductAdvantage[]
+
   tags: string[]
 
-  /**
-   * 产品图片
-   */
   coverImage?: string
 
-  /**
-   * 架构图
-   */
   architectureImage?: string
 
-  /**
-   * Demo 视频
-   */
+  architectureDescription?: string
+
   demoVideo?: string
 
-  /**
-   * Demo / 试用入口
-   */
   demoLink?: ProductLink
+
   trialLink?: ProductLink
 
-  /**
-   * 是否核心产品
-   */
   featured: boolean
 
-  /**
-   * 排序
-   */
   order: number
 
-  /**
-   * 产品状态
-   */
   status: 'available' | 'coming-soon'
 }

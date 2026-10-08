@@ -1,119 +1,319 @@
 <template>
   <main class="product-detail-page">
 
-    <section
-      v-if="product"
-      class="product-hero"
-    >
-      <div class="page-container">
+    <!-- 产品存在 -->
+    <template v-if="product">
 
-        <span class="product-category">
-          {{ categoryName }}
-        </span>
-
-        <h1>
-          {{ product.name }}
-        </h1>
-
-        <p class="tagline">
-          {{ product.tagline }}
-        </p>
-
-        <div class="product-tags">
-          <span
-            v-for="tag in product.tags"
-            :key="tag"
-          >
-            {{ tag }}
-          </span>
-        </div>
-
-      </div>
-    </section>
+      <!-- 01 产品首屏 -->
+      <ProductHero
+        :product="product"
+        :category-name="categoryName"
+        @experience="handleExperience"
+        @trial="handleTrial"
+      />
 
 
-    <section
-      v-if="product"
-      class="page-section"
-    >
-      <div class="page-container">
+      <!-- 02 产品价值 -->
+      <section class="page-section">
+        <div class="page-container">
 
-        <h2>
-          产品简介
-        </h2>
-
-        <p class="description">
-          {{ product.description }}
-        </p>
-
-      </div>
-    </section>
+          <ProductSectionTitle
+            eyebrow="PRODUCT VALUE"
+            title="产品价值"
+            description="围绕企业数据建设与应用场景，持续释放数据资产价值。"
+          />
 
 
-    <section
-      v-if="product"
-      class="page-section feature-section"
-    >
-      <div class="page-container">
-
-        <h2>
-          核心能力
-        </h2>
-
-        <div class="feature-grid">
           <div
-            v-for="feature in product.features"
-            :key="feature.title"
-            class="feature-card"
+            v-if="
+              product.values &&
+              product.values.length > 0
+            "
+            class="value-grid"
           >
-            <h3>
-              {{ feature.title }}
-            </h3>
-
-            <p>
-              {{ feature.description }}
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <section
-      v-if="product"
-      class="page-section"
-    >
-      <div class="page-container">
-
-        <h2>
-          应用场景
-        </h2>
-
-        <div class="scenario-grid">
-          <div
-            v-for="scenario in product.scenarios"
-            :key="scenario.title"
-            class="scenario-card"
-          >
-            <h3>
-              {{ scenario.title }}
-            </h3>
-
-            <p
-              v-if="scenario.description"
+            <article
+              v-for="value in product.values"
+              :key="value.title"
+              class="value-card"
             >
-              {{ scenario.description }}
-            </p>
+              <h3>
+                {{ value.title }}
+              </h3>
+
+              <p>
+                {{ value.description }}
+              </p>
+            </article>
           </div>
+
+
+          <div
+            v-else
+            class="product-description"
+          >
+            {{ product.description }}
+          </div>
+
         </div>
-
-      </div>
-    </section>
+      </section>
 
 
+      <!-- 03 核心能力 -->
+      <section class="page-section feature-section">
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="CORE CAPABILITIES"
+            title="核心能力"
+            description="围绕产品核心定位，形成可复用、可组合的数据能力体系。"
+          />
+
+
+          <ProductFeatureGrid
+            :features="product.features"
+          />
+
+        </div>
+      </section>
+
+
+      <!-- 04 产品架构 -->
+      <section class="page-section">
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="ARCHITECTURE"
+            title="产品架构"
+            description="通过统一架构组织产品能力，并与上下游平台形成协同。"
+          />
+
+
+          <div class="architecture-box">
+
+            <img
+              v-if="product.architectureImage"
+              :src="product.architectureImage"
+              :alt="`${product.name}产品架构`"
+              class="architecture-image"
+            />
+
+
+            <div
+              v-else
+              class="architecture-placeholder"
+            >
+              <span>
+                PRODUCT ARCHITECTURE
+              </span>
+
+              <strong>
+                {{ product.name }}
+              </strong>
+
+              <p>
+                {{
+                  product.architectureDescription ||
+                  '产品架构图将在后续产品内容接入阶段补充。'
+                }}
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- 05 典型场景 -->
+      <section class="page-section scenario-section">
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="SCENARIOS"
+            title="典型应用场景"
+            description="围绕不同业务角色和行业场景，发挥产品能力价值。"
+          />
+
+
+          <ProductScenarioGrid
+            :scenarios="product.scenarios"
+          />
+
+        </div>
+      </section>
+
+
+      <!-- 06 产品优势 -->
+      <section class="page-section advantage-section">
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="ADVANTAGES"
+            title="产品优势"
+            description="持续沉淀企业级数据平台技术与产品实践。"
+          />
+
+
+          <div
+            v-if="
+              product.advantages &&
+              product.advantages.length > 0
+            "
+            class="advantage-grid"
+          >
+            <article
+              v-for="advantage in product.advantages"
+              :key="advantage.title"
+              class="advantage-card"
+            >
+              <h3>
+                {{ advantage.title }}
+              </h3>
+
+              <p>
+                {{ advantage.description }}
+              </p>
+            </article>
+          </div>
+
+
+          <div
+            v-else
+            class="advantage-grid"
+          >
+            <article class="advantage-card">
+              <h3>
+                企业级
+              </h3>
+
+              <p>
+                面向复杂组织和大规模数据应用场景进行产品设计。
+              </p>
+            </article>
+
+
+            <article class="advantage-card">
+              <h3>
+                一体化
+              </h3>
+
+              <p>
+                与数据中台上下游产品协同，形成完整数据能力链路。
+              </p>
+            </article>
+
+
+            <article class="advantage-card">
+              <h3>
+                可扩展
+              </h3>
+
+              <p>
+                采用模块化能力设计，支持后续持续升级和扩展。
+              </p>
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- 07 Demo / 体验 -->
+      <section class="page-section demo-section">
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="DEMO"
+            title="产品体验"
+            description="通过 Demo、演示视频或独立试用环境快速了解产品能力。"
+          />
+
+
+          <div class="demo-box">
+
+            <div class="demo-content">
+              <span class="demo-label">
+                PRODUCT DEMO
+              </span>
+
+              <h3>
+                {{ product.name }}
+              </h3>
+
+              <p>
+                当前门户负责产品介绍和体验入口，
+                具体产品能力由独立产品环境提供。
+              </p>
+            </div>
+
+
+            <div class="demo-actions">
+
+              <el-button
+                type="primary"
+                size="large"
+                @click="handleExperience"
+              >
+                在线体验
+              </el-button>
+
+
+              <el-button
+                size="large"
+                @click="handleTrial"
+              >
+                申请试用
+              </el-button>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- 08 CTA -->
+      <section class="cta-section">
+        <div class="page-container">
+
+          <div class="cta-box">
+
+            <div>
+              <p>
+                GET STARTED
+              </p>
+
+              <h2>
+                开始体验 {{ product.name }}
+              </h2>
+
+              <span>
+                查看产品 Demo 或申请进入独立试用环境。
+              </span>
+            </div>
+
+
+            <el-button
+              type="primary"
+              size="large"
+              @click="handleTrial"
+            >
+              申请试用
+            </el-button>
+
+          </div>
+
+        </div>
+      </section>
+
+    </template>
+
+
+    <!-- 产品不存在 -->
     <section
-      v-if="!product"
+      v-else
       class="not-found"
     >
       <div class="page-container">
@@ -142,12 +342,30 @@
 
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import {
+  computed,
+} from 'vue'
+
+import {
+  ElMessage,
+} from 'element-plus'
 
 import {
   useRoute,
   useRouter,
 } from 'vue-router'
+
+import ProductHero
+  from '../components/product/ProductHero.vue'
+
+import ProductFeatureGrid
+  from '../components/product/ProductFeatureGrid.vue'
+
+import ProductScenarioGrid
+  from '../components/product/ProductScenarioGrid.vue'
+
+import ProductSectionTitle
+  from '../components/product/ProductSectionTitle.vue'
 
 import {
   getProductBySlug,
@@ -177,124 +395,85 @@ const categoryName = computed(() => {
     return ''
   }
 
-  const family = productFamilies.find(
-    item =>
-      item.id === product.value?.category,
-  )
+  const family =
+    productFamilies.find(
+      item =>
+        item.id ===
+        product.value?.category,
+    )
 
   return family?.name || ''
 })
+
+
+function handleExperience() {
+  if (!product.value) {
+    return
+  }
+
+
+  const demoLink =
+    product.value.demoLink
+
+
+  if (
+    demoLink?.enabled &&
+    demoLink.url
+  ) {
+    window.open(
+      demoLink.url,
+      '_blank',
+    )
+
+    return
+  }
+
+
+  ElMessage.info(
+    '当前产品体验环境正在逐步接入，敬请期待。',
+  )
+}
+
+
+function handleTrial() {
+  if (!product.value) {
+    return
+  }
+
+
+  const trialLink =
+    product.value.trialLink
+
+
+  if (
+    trialLink?.enabled &&
+    trialLink.url
+  ) {
+    window.open(
+      trialLink.url,
+      '_blank',
+    )
+
+    return
+  }
+
+
+  ElMessage.info(
+    '试用申请功能将在后续版本开放。',
+  )
+}
 </script>
 
 
 <style scoped>
-.product-hero {
-  padding:
-    100px 0 80px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #f5f9ff 0%,
-      #ffffff 100%
-    );
+.product-detail-page {
+  background: #ffffff;
 }
 
 
-.product-category {
-  display: inline-block;
+/* 产品价值 */
 
-  margin-bottom: 18px;
-
-  color:
-    var(--color-primary);
-
-  font-size: 14px;
-
-  font-weight: 600;
-}
-
-
-.product-hero h1 {
-  margin: 0;
-
-  font-size: 52px;
-
-  line-height: 1.2;
-}
-
-
-.tagline {
-  max-width: 820px;
-
-  margin:
-    24px 0 0;
-
-  color:
-    var(--color-text-secondary);
-
-  font-size: 20px;
-
-  line-height: 1.8;
-}
-
-
-.product-tags {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 10px;
-
-  margin-top: 30px;
-}
-
-
-.product-tags span {
-  padding:
-    7px 12px;
-
-  border-radius: 999px;
-
-  background:
-    #eef5ff;
-
-  color:
-    var(--color-primary);
-
-  font-size: 13px;
-}
-
-
-h2 {
-  margin:
-    0 0 30px;
-
-  font-size: 32px;
-}
-
-
-.description {
-  max-width: 920px;
-
-  margin: 0;
-
-  color:
-    var(--color-text-secondary);
-
-  font-size: 17px;
-
-  line-height: 1.9;
-}
-
-
-.feature-section {
-  background:
-    var(--color-bg-light);
-}
-
-
-.feature-grid {
+.value-grid {
   display: grid;
 
   grid-template-columns:
@@ -304,11 +483,10 @@ h2 {
 }
 
 
-.feature-card {
-  padding:
-    28px;
+.value-card {
+  min-height: 180px;
 
-  background: #ffffff;
+  padding: 28px;
 
   border:
     1px solid
@@ -316,10 +494,12 @@ h2 {
 
   border-radius:
     var(--radius-lg);
+
+  background: #ffffff;
 }
 
 
-.feature-card h3 {
+.value-card h3 {
   margin:
     0 0 12px;
 
@@ -327,7 +507,7 @@ h2 {
 }
 
 
-.feature-card p {
+.value-card p {
   margin: 0;
 
   color:
@@ -339,52 +519,323 @@ h2 {
 }
 
 
-.scenario-grid {
-  display: grid;
+.product-description {
+  max-width: 960px;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  padding:
+    34px;
 
-  gap: 16px;
+  border-left:
+    3px solid
+    var(--color-primary);
+
+  background:
+    #f7faff;
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 17px;
+
+  line-height: 1.95;
 }
 
 
-.scenario-card {
-  padding:
-    26px;
+/* 核心能力 */
+
+.feature-section {
+  background:
+    var(--color-bg-light);
+}
+
+
+/* 产品架构 */
+
+.architecture-box {
+  min-height: 360px;
+}
+
+
+.architecture-image {
+  display: block;
+
+  width: 100%;
+
+  border-radius:
+    var(--radius-lg);
+}
+
+
+.architecture-placeholder {
+  min-height: 360px;
+
+  padding: 48px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  border:
+    1px dashed
+    rgba(
+      22,
+      119,
+      255,
+      0.3
+    );
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    linear-gradient(
+      135deg,
+      #f6faff,
+      #eef5ff
+    );
+}
+
+
+.architecture-placeholder span {
+  margin-bottom: 20px;
+
+  color:
+    var(--color-primary);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+
+.architecture-placeholder strong {
+  font-size: 30px;
+}
+
+
+.architecture-placeholder p {
+  max-width: 720px;
+
+  margin:
+    18px 0 0;
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+
+/* 场景 */
+
+.scenario-section {
+  background: #ffffff;
+}
+
+
+/* 产品优势 */
+
+.advantage-section {
+  background:
+    var(--color-bg-light);
+}
+
+
+.advantage-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+.advantage-card {
+  min-height: 170px;
+
+  padding: 28px;
 
   border:
     1px solid
     var(--color-border);
 
   border-radius:
-    var(--radius-md);
+    var(--radius-lg);
+
+  background: #ffffff;
 }
 
 
-.scenario-card h3 {
-  margin: 0;
-
-  font-size: 16px;
-}
-
-
-.scenario-card p {
+.advantage-card h3 {
   margin:
-    12px 0 0;
+    0 0 12px;
+
+  font-size: 18px;
+}
+
+
+.advantage-card p {
+  margin: 0;
 
   color:
     var(--color-text-secondary);
 
   font-size: 14px;
 
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 
+/* Demo */
+
+.demo-section {
+  background: #ffffff;
+}
+
+
+.demo-box {
+  padding: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 40px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f6faff
+    );
+}
+
+
+.demo-label {
+  color:
+    var(--color-primary);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+
+.demo-content h3 {
+  margin:
+    12px 0 12px;
+
+  font-size: 24px;
+}
+
+
+.demo-content p {
+  max-width: 680px;
+
+  margin: 0;
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+.demo-actions {
+  display: flex;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+
+/* CTA */
+
+.cta-section {
+  padding:
+    40px 0 100px;
+}
+
+
+.cta-box {
+  padding: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 30px;
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef5ff,
+      #f7faff
+    );
+}
+
+
+.cta-box p {
+  margin:
+    0 0 10px;
+
+  color:
+    var(--color-primary);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+
+.cta-box h2 {
+  margin:
+    0 0 12px;
+
+  font-size: 30px;
+}
+
+
+.cta-box span {
+  color:
+    var(--color-text-secondary);
+}
+
+
+/* 404 */
+
 .not-found {
-  min-height:
-    600px;
+  min-height: 620px;
 
   padding:
     120px 0;
@@ -407,34 +858,34 @@ h2 {
 }
 
 
+/* Responsive */
+
 @media (max-width: 900px) {
-  .feature-grid {
+  .value-grid,
+  .advantage-grid {
     grid-template-columns:
       repeat(2, 1fr);
   }
 
 
-  .scenario-grid {
-    grid-template-columns:
-      repeat(2, 1fr);
+  .demo-box,
+  .cta-box {
+    flex-direction: column;
+
+    align-items: flex-start;
   }
 }
 
 
 @media (max-width: 600px) {
-  .product-hero h1 {
-    font-size: 38px;
-  }
-
-
-  .tagline {
-    font-size: 17px;
-  }
-
-
-  .feature-grid,
-  .scenario-grid {
+  .value-grid,
+  .advantage-grid {
     grid-template-columns: 1fr;
+  }
+
+
+  .demo-actions {
+    flex-direction: column;
   }
 }
 </style>
