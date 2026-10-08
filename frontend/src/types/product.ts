@@ -30,6 +30,20 @@ export interface ProductValue {
 }
 
 
+export interface ProductMetric {
+  value: string
+  label: string
+  description?: string
+}
+
+
+export interface ProductCase {
+  title: string
+  description: string
+  result?: string
+}
+
+
 export interface ProductLink {
   label: string
   url: string
@@ -59,6 +73,10 @@ export interface Product {
   scenarios: ProductScenario[]
 
   advantages?: ProductAdvantage[]
+
+  metrics?: ProductMetric[]
+
+  cases?: ProductCase[]
 
   tags: string[]
 

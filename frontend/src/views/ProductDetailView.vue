@@ -77,7 +77,56 @@
       </section>
 
 
-      <!-- 04 产品架构 -->
+      <!-- 04 关键指标 -->
+      <section
+        v-if="
+          product.metrics &&
+          product.metrics.length > 0
+        "
+        class="metrics-section"
+      >
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="KEY METRICS"
+            title="关键指标"
+            description="通过规模、效率与能力指标，直观展现产品建设与应用成效。"
+          />
+
+
+          <div class="metrics-grid">
+
+            <article
+              v-for="metric in product.metrics"
+              :key="
+                `${metric.value}-${metric.label}`
+              "
+              class="metric-card"
+            >
+
+              <strong>
+                {{ metric.value }}
+              </strong>
+
+              <h3>
+                {{ metric.label }}
+              </h3>
+
+              <p
+                v-if="metric.description"
+              >
+                {{ metric.description }}
+              </p>
+
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- 05 产品架构 -->
       <section class="page-section">
         <div class="page-container">
 
@@ -124,7 +173,7 @@
       </section>
 
 
-      <!-- 05 典型场景 -->
+      <!-- 06 典型场景 -->
       <section class="page-section scenario-section">
         <div class="page-container">
 
@@ -143,7 +192,7 @@
       </section>
 
 
-      <!-- 06 产品优势 -->
+      <!-- 07 产品优势 -->
       <section class="page-section advantage-section">
         <div class="page-container">
 
@@ -219,7 +268,72 @@
       </section>
 
 
-      <!-- 07 Demo / 体验 -->
+      <!-- 08 典型案例 -->
+      <section
+        v-if="
+          product.cases &&
+          product.cases.length > 0
+        "
+        class="page-section case-section"
+      >
+        <div class="page-container">
+
+          <ProductSectionTitle
+            eyebrow="CASES"
+            title="典型案例"
+            description="结合实际建设与应用场景，展现产品落地路径与业务价值。"
+          />
+
+
+          <div class="case-grid">
+
+            <article
+              v-for="(caseItem, index) in product.cases"
+              :key="caseItem.title"
+              class="case-card"
+            >
+
+              <div class="case-number">
+                0{{ index + 1 }}
+              </div>
+
+
+              <div class="case-content">
+
+                <h3>
+                  {{ caseItem.title }}
+                </h3>
+
+
+                <p class="case-description">
+                  {{ caseItem.description }}
+                </p>
+
+
+                <div
+                  v-if="caseItem.result"
+                  class="case-result"
+                >
+                  <span>
+                    应用成效
+                  </span>
+
+                  <p>
+                    {{ caseItem.result }}
+                  </p>
+                </div>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- 09 Demo / 体验 -->
       <section class="page-section demo-section">
         <div class="page-container">
 
@@ -274,7 +388,7 @@
       </section>
 
 
-      <!-- 08 CTA -->
+      <!-- 10 CTA -->
       <section class="cta-section">
         <div class="page-container">
 
@@ -522,8 +636,7 @@ function handleTrial() {
 .product-description {
   max-width: 960px;
 
-  padding:
-    34px;
+  padding: 34px;
 
   border-left:
     3px solid
@@ -546,6 +659,108 @@ function handleTrial() {
 .feature-section {
   background:
     var(--color-bg-light);
+}
+
+
+/* 关键指标 */
+
+.metrics-section {
+  padding:
+    80px 0;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d2343,
+      #123b70
+    );
+}
+
+
+.metrics-section
+:deep(.section-title .eyebrow) {
+  color: #7cb3ff;
+}
+
+
+.metrics-section
+:deep(.section-title h2) {
+  color: #ffffff;
+}
+
+
+.metrics-section
+:deep(.section-title .description) {
+  color:
+    rgba(255, 255, 255, 0.64);
+}
+
+
+.metrics-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 18px;
+}
+
+
+.metric-card {
+  min-height: 170px;
+
+  padding:
+    28px 24px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    rgba(255, 255, 255, 0.05);
+}
+
+
+.metric-card strong {
+  display: block;
+
+  color:
+    #ffffff;
+
+  font-size: 34px;
+
+  line-height: 1.2;
+}
+
+
+.metric-card h3 {
+  margin:
+    14px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.9);
+
+  font-size: 15px;
+
+  font-weight: 500;
+}
+
+
+.metric-card p {
+  margin:
+    12px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.58);
+
+  font-size: 13px;
+
+  line-height: 1.7;
 }
 
 
@@ -618,7 +833,7 @@ function handleTrial() {
 
 
 .architecture-placeholder p {
-  max-width: 720px;
+  max-width: 760px;
 
   margin:
     18px 0 0;
@@ -651,7 +866,7 @@ function handleTrial() {
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(4, 1fr);
 
   gap: 20px;
 }
@@ -693,10 +908,145 @@ function handleTrial() {
 }
 
 
+/* 典型案例 */
+
+.case-section {
+  background: #ffffff;
+}
+
+
+.case-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+
+.case-card {
+  min-height: 280px;
+
+  padding: 30px;
+
+  display: flex;
+
+  gap: 24px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius:
+    var(--radius-lg);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #fbfcfe
+    );
+
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+
+
+.case-card:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    var(--shadow-card);
+}
+
+
+.case-number {
+  flex-shrink: 0;
+
+  color:
+    #c4d5ea;
+
+  font-size: 32px;
+
+  font-weight: 600;
+}
+
+
+.case-content {
+  flex: 1;
+}
+
+
+.case-content h3 {
+  margin:
+    3px 0 14px;
+
+  font-size: 20px;
+
+  line-height: 1.45;
+}
+
+
+.case-description {
+  margin: 0;
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 14px;
+
+  line-height: 1.85;
+}
+
+
+.case-result {
+  margin-top: 22px;
+
+  padding:
+    16px 18px;
+
+  border-radius:
+    var(--radius-md);
+
+  background:
+    #f2f7ff;
+}
+
+
+.case-result span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color:
+    var(--color-primary);
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+.case-result p {
+  margin: 0;
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
 /* Demo */
 
 .demo-section {
-  background: #ffffff;
+  background:
+    var(--color-bg-light);
 }
 
 
@@ -720,11 +1070,7 @@ function handleTrial() {
     var(--radius-lg);
 
   background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #f6faff
-    );
+    #ffffff;
 }
 
 
@@ -860,11 +1206,29 @@ function handleTrial() {
 
 /* Responsive */
 
-@media (max-width: 900px) {
-  .value-grid,
+@media (max-width: 1000px) {
+  .metrics-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
   .advantage-grid {
     grid-template-columns:
       repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 900px) {
+  .value-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  .case-grid {
+    grid-template-columns: 1fr;
   }
 
 
@@ -879,8 +1243,14 @@ function handleTrial() {
 
 @media (max-width: 600px) {
   .value-grid,
+  .metrics-grid,
   .advantage-grid {
     grid-template-columns: 1fr;
+  }
+
+
+  .case-card {
+    flex-direction: column;
   }
 
 
