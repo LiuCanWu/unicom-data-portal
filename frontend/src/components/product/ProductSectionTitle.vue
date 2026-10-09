@@ -1,5 +1,6 @@
 <template>
   <div class="section-title">
+
     <p
       v-if="eyebrow"
       class="eyebrow"
@@ -7,9 +8,17 @@
       {{ eyebrow }}
     </p>
 
-    <h2>
-      {{ title }}
-    </h2>
+
+    <div class="title-row">
+
+      <h2>
+        {{ title }}
+      </h2>
+
+      <span class="title-line" />
+
+    </div>
+
 
     <p
       v-if="description"
@@ -17,6 +26,7 @@
     >
       {{ description }}
     </p>
+
   </div>
 </template>
 
@@ -32,9 +42,9 @@ defineProps<{
 
 <style scoped>
 .section-title {
-  max-width: 760px;
+  max-width: 780px;
 
-  margin-bottom: 42px;
+  margin-bottom: 44px;
 }
 
 
@@ -45,20 +55,54 @@ defineProps<{
   color:
     var(--color-primary);
 
-  font-size: 13px;
+  font-size: 11px;
 
   font-weight: 600;
 
-  letter-spacing: 1px;
+  letter-spacing:
+    1.4px;
+}
+
+
+.title-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
 }
 
 
 h2 {
+  flex-shrink: 0;
+
   margin: 0;
+
+  color:
+    var(--color-text-primary);
 
   font-size: 36px;
 
+  font-weight: 600;
+
   line-height: 1.3;
+
+  letter-spacing:
+    -0.03em;
+}
+
+
+.title-line {
+  width: 72px;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--color-primary),
+      transparent
+    );
 }
 
 
@@ -69,15 +113,20 @@ h2 {
   color:
     var(--color-text-secondary);
 
-  font-size: 16px;
+  font-size: 15px;
 
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
 
 @media (max-width: 768px) {
   h2 {
     font-size: 30px;
+  }
+
+
+  .title-line {
+    width: 42px;
   }
 }
 </style>

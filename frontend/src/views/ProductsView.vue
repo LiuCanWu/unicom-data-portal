@@ -1,189 +1,138 @@
 <template>
   <main class="products-page">
 
-    <!-- 页面顶部 -->
+    <!-- =====================================================
+         01 Hero
+    ====================================================== -->
     <PageHero
       eyebrow="PRODUCTS"
       title="数据智能产品中心"
-      description="围绕数据统一承载、高质量生产、智能语义、智能应用、可信流通与价值运营，构建覆盖数据全生命周期的数据智能产品体系。"
+      description="围绕数据底座、数据生产、智能语义、数据分析与可信流通，构建覆盖数据全生命周期的一体化产品体系。"
     />
 
 
-    <!-- 产品价值链 -->
-    <section class="value-chain-section">
+    <!-- =====================================================
+         02 产品体系概览
+    ====================================================== -->
+    <section class="overview-section">
+
       <div class="page-container">
 
-        <div class="section-header">
-          <p>PRODUCT MAP</p>
+        <div class="overview-panel">
 
-          <h2>
-            从数据到底座，到智能与价值释放
-          </h2>
+          <div class="overview-copy">
 
-          <span>
-            以数据为基础，逐步向高质量生产、业务语义理解、
-            智能应用、可信流通和价值量化延伸。
-          </span>
-        </div>
+            <p class="section-eyebrow">
+              PRODUCT SYSTEM
+            </p>
 
-
-        <div class="value-chain">
-
-          <div class="chain-item">
-            <span class="chain-number">
-              01
-            </span>
-
-            <strong>
-              统一承载
-            </strong>
+            <h2>
+              从数据基础设施
+              <span>走向数据智能与价值释放</span>
+            </h2>
 
             <p>
-              湖仓一体
+              以湖仓一体为数据底座，
+              通过数据生产、高质量数据、业务语义和智能应用，
+              进一步延伸至可信流通与数据价值运营。
             </p>
+
           </div>
 
 
-          <div class="chain-arrow">
-            →
-          </div>
+          <div class="overview-chain">
 
+            <div
+              v-for="stage in systemStages"
+              :key="stage.number"
+              class="overview-stage"
+            >
+              <span>
+                {{ stage.number }}
+              </span>
 
-          <div class="chain-item">
-            <span class="chain-number">
-              02
-            </span>
+              <strong>
+                {{ stage.title }}
+              </strong>
 
-            <strong>
-              高质量生产
-            </strong>
+              <small>
+                {{ stage.english }}
+              </small>
+            </div>
 
-            <p>
-              数据加工 / AI数据集
-            </p>
-          </div>
-
-
-          <div class="chain-arrow">
-            →
-          </div>
-
-
-          <div class="chain-item">
-            <span class="chain-number">
-              03
-            </span>
-
-            <strong>
-              智能语义
-            </strong>
-
-            <p>
-              本体建模
-            </p>
-          </div>
-
-
-          <div class="chain-arrow">
-            →
-          </div>
-
-
-          <div class="chain-item">
-            <span class="chain-number">
-              04
-            </span>
-
-            <strong>
-              智能应用
-            </strong>
-
-            <p>
-              自助分析 / 数据智能体
-            </p>
-          </div>
-
-
-          <div class="chain-arrow">
-            →
-          </div>
-
-
-          <div class="chain-item">
-            <span class="chain-number">
-              05
-            </span>
-
-            <strong>
-              可信流通
-            </strong>
-
-            <p>
-              可信数据空间
-            </p>
-          </div>
-
-
-          <div class="chain-arrow">
-            →
-          </div>
-
-
-          <div class="chain-item">
-            <span class="chain-number">
-              06
-            </span>
-
-            <strong>
-              价值运营
-            </strong>
-
-            <p>
-              数据计量计价
-            </p>
           </div>
 
         </div>
 
       </div>
+
     </section>
 
 
-    <!-- 产品列表 -->
-    <section class="product-section">
+    <!-- =====================================================
+         03 产品家族
+    ====================================================== -->
+    <section class="family-section">
+
       <div class="page-container">
 
-        <div class="section-header">
-          <p>PRODUCT FAMILY</p>
+        <div class="section-heading">
 
-          <h2>
-            产品家族
-          </h2>
+          <div>
+            <p class="section-eyebrow">
+              PRODUCT FAMILY
+            </p>
 
-          <span>
-            根据不同数据能力方向查看对应产品。
-          </span>
+            <h2>
+              五大产品能力方向
+            </h2>
+          </div>
+
+          <p class="section-description">
+            从基础设施到智能应用，
+            按照企业数据能力建设阶段组织产品家族。
+          </p>
+
         </div>
 
 
-        <!-- 分类 -->
-        <div class="category-tabs">
+        <div class="family-grid">
 
           <button
-            class="category-tab"
+            class="family-card all-family"
             :class="{
-              active: selectedCategory === 'all'
+              active:
+                selectedCategory === 'all'
             }"
+            type="button"
             @click="selectedCategory = 'all'"
           >
-            全部产品
+
+            <div class="family-number">
+              ALL
+            </div>
+
+            <h3>
+              全部产品
+            </h3>
+
+            <p>
+              查看完整的数据智能产品体系。
+            </p>
+
+            <span class="family-count">
+              {{ products.length }}
+              PRODUCTS
+            </span>
+
           </button>
 
 
           <button
             v-for="family in productFamilies"
             :key="family.id"
-            class="category-tab"
+            type="button"
+            class="family-card"
             :class="{
               active:
                 selectedCategory === family.id
@@ -192,38 +141,121 @@
               selectedCategory = family.id
             "
           >
-            {{ family.name }}
+
+            <div class="family-number">
+              0{{ family.order }}
+            </div>
+
+            <small>
+              {{ family.englishName }}
+            </small>
+
+            <h3>
+              {{ family.name }}
+            </h3>
+
+            <p>
+              {{ family.description }}
+            </p>
+
+            <span class="family-count">
+              {{
+                getProductCount(
+                  family.id
+                )
+              }}
+              PRODUCTS
+            </span>
+
           </button>
 
         </div>
 
+      </div>
 
-        <!-- 产品数量 -->
-        <div class="product-result">
-          共
-          <strong>
-            {{ filteredProducts.length }}
-          </strong>
-          个产品
+    </section>
+
+
+    <!-- =====================================================
+         04 产品列表
+    ====================================================== -->
+    <section class="product-section">
+
+      <div class="page-container">
+
+        <div class="product-toolbar">
+
+          <div>
+
+            <p class="section-eyebrow">
+              PRODUCT LIST
+            </p>
+
+            <h2>
+              {{ currentCategoryName }}
+            </h2>
+
+            <p class="result-text">
+              共
+              <strong>
+                {{ filteredProducts.length }}
+              </strong>
+              个产品
+            </p>
+
+          </div>
+
+
+          <div class="toolbar-tabs">
+
+            <button
+              type="button"
+              :class="{
+                active:
+                  selectedCategory === 'all'
+              }"
+              @click="
+                selectedCategory = 'all'
+              "
+            >
+              全部
+            </button>
+
+            <button
+              v-for="family in productFamilies"
+              :key="family.id"
+              type="button"
+              :class="{
+                active:
+                  selectedCategory === family.id
+              }"
+              @click="
+                selectedCategory = family.id
+              "
+            >
+              {{ family.name }}
+            </button>
+
+          </div>
+
         </div>
 
 
-        <!-- 产品卡片 -->
         <div class="product-grid">
 
           <article
-            v-for="product in filteredProducts"
+            v-for="(product, index) in filteredProducts"
             :key="product.id"
             class="product-card"
             @click="goProduct(product.slug)"
           >
 
-            <div class="product-top">
+            <div class="product-card-head">
 
-              <span class="product-category">
+              <span class="product-index">
                 {{
-                  getCategoryName(
-                    product.category
+                  formatNumber(
+                    index + 1
                   )
                 }}
               </span>
@@ -239,6 +271,15 @@
                 规划中
               </span>
 
+            </div>
+
+
+            <div class="product-category">
+              {{
+                getCategoryName(
+                  product.category
+                )
+              }}
             </div>
 
 
@@ -265,15 +306,15 @@
             </div>
 
 
-            <div class="product-footer">
+            <div class="product-card-footer">
 
               <span>
                 查看产品详情
               </span>
 
-              <span class="arrow">
+              <strong>
                 →
-              </span>
+              </strong>
 
             </div>
 
@@ -282,6 +323,51 @@
         </div>
 
       </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         05 CTA
+    ====================================================== -->
+    <section class="cta-section">
+
+      <div class="page-container">
+
+        <div class="cta-box">
+
+          <div>
+            <p>
+              PRODUCT EXPERIENCE
+            </p>
+
+            <h2>
+              进一步体验产品核心能力
+            </h2>
+
+            <span>
+              进入体验中心查看产品 Demo、
+              视频介绍与独立试用环境。
+            </span>
+          </div>
+
+
+          <el-button
+            type="primary"
+            size="large"
+            @click="
+              router.push(
+                '/experience'
+              )
+            "
+          >
+            前往体验中心
+          </el-button>
+
+        </div>
+
+      </div>
+
     </section>
 
   </main>
@@ -314,7 +400,8 @@ import type {
 } from '../types/product'
 
 
-const router = useRouter()
+const router =
+  useRouter()
 
 
 type CategoryFilter =
@@ -324,6 +411,40 @@ type CategoryFilter =
 
 const selectedCategory =
   ref<CategoryFilter>('all')
+
+
+const systemStages = [
+  {
+    number: '01',
+    title: '数据底座',
+    english: 'FOUNDATION',
+  },
+  {
+    number: '02',
+    title: '数据生产',
+    english: 'ENGINEERING',
+  },
+  {
+    number: '03',
+    title: '智能语义',
+    english: 'SEMANTIC',
+  },
+  {
+    number: '04',
+    title: '智能应用',
+    english: 'INTELLIGENCE',
+  },
+  {
+    number: '05',
+    title: '可信流通',
+    english: 'CIRCULATION',
+  },
+  {
+    number: '06',
+    title: '价值运营',
+    english: 'VALUE',
+  },
+]
 
 
 const filteredProducts =
@@ -353,6 +474,43 @@ const filteredProducts =
   })
 
 
+const currentCategoryName =
+  computed(() => {
+
+    if (
+      selectedCategory.value ===
+      'all'
+    ) {
+      return '全部产品'
+    }
+
+
+    const family =
+      productFamilies.find(
+        item =>
+          item.id ===
+          selectedCategory.value,
+      )
+
+
+    return (
+      family?.name ||
+      '产品'
+    )
+  })
+
+
+function getProductCount(
+  category: ProductCategory,
+) {
+  return products.filter(
+    product =>
+      product.category ===
+      category,
+  ).length
+}
+
+
 function getCategoryName(
   category: ProductCategory,
 ) {
@@ -362,9 +520,22 @@ function getCategoryName(
         item.id === category,
     )
 
+
   return (
     family?.name ||
     category
+  )
+}
+
+
+function formatNumber(
+  index: number,
+) {
+  return String(
+    index,
+  ).padStart(
+    2,
+    '0',
   )
 }
 
@@ -381,81 +552,206 @@ function goProduct(
 
 <style scoped>
 .products-page {
-  background: #ffffff;
+  background:
+    #ffffff;
 }
 
 
-/* Section Header */
+/* =====================================================
+   通用标题
+===================================================== */
 
-.section-header {
-  max-width: 760px;
+.section-heading {
+  display: grid;
 
-  margin-bottom: 42px;
+  grid-template-columns:
+    1fr 1fr;
+
+  align-items: end;
+
+  gap: 80px;
+
+  margin-bottom: 46px;
 }
 
 
-.section-header > p {
-  margin:
-    0 0 10px;
+.section-heading h2 {
+  margin: 0;
+
+  font-size: 36px;
+}
+
+
+.section-heading
+.section-description {
+  margin: 0;
+}
+
+
+/* =====================================================
+   产品体系概览
+===================================================== */
+
+.overview-section {
+  padding:
+    72px 0 42px;
+}
+
+
+.overview-panel {
+  display: grid;
+
+  grid-template-columns:
+    minmax(300px, 0.8fr)
+    minmax(0, 1.2fr);
+
+  align-items: center;
+
+  gap: 60px;
+
+  padding:
+    46px;
+
+  border:
+    1px solid
+    rgba(
+      21,
+      101,
+      216,
+      0.10
+    );
+
+  border-radius:
+    var(--radius-xl);
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7faff,
+      #ffffff
+    );
+}
+
+
+.overview-copy h2 {
+  margin: 0;
+
+  font-size: 34px;
+
+  line-height: 1.4;
+}
+
+
+.overview-copy h2 span {
+  display: block;
 
   color:
     var(--color-primary);
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  letter-spacing: 1px;
 }
 
 
-.section-header h2 {
+.overview-copy > p:last-child {
+  max-width: 520px;
+
   margin:
-    0 0 16px;
+    20px 0 0;
 
-  font-size: 36px;
-
-  line-height: 1.3;
-}
-
-
-.section-header span {
   color:
     var(--color-text-secondary);
 
-  font-size: 16px;
+  font-size: 14px;
 
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 
-/* 产品价值链 */
+.overview-chain {
+  display: grid;
 
-.value-chain-section {
-  padding:
-    80px 0;
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+}
+
+
+.overview-stage {
+  min-height: 100px;
+
+  padding: 16px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius:
+    12px;
 
   background:
     #ffffff;
 }
 
 
-.value-chain {
-  display: flex;
+.overview-stage span {
+  color:
+    #bfd0e4;
 
-  align-items: stretch;
+  font-size: 17px;
 
-  gap: 12px;
+  font-weight: 600;
 }
 
 
-.chain-item {
-  flex: 1;
+.overview-stage strong {
+  display: block;
 
-  min-width: 0;
+  margin-top: 12px;
 
+  font-size: 13px;
+}
+
+
+.overview-stage small {
+  display: block;
+
+  margin-top: 4px;
+
+  color:
+    var(--color-text-tertiary);
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.7px;
+}
+
+
+/* =====================================================
+   产品家族
+===================================================== */
+
+.family-section {
   padding:
-    24px 18px;
+    70px 0 82px;
+}
+
+
+.family-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+
+.family-card {
+  position: relative;
+
+  min-height: 220px;
+
+  padding: 25px;
 
   border:
     1px solid
@@ -466,16 +762,55 @@ function goProduct(
 
   background:
     #ffffff;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    all
+    var(--transition-normal);
 }
 
 
-.chain-number {
-  display: block;
+.family-card:hover {
+  transform:
+    translateY(-4px);
 
-  margin-bottom: 18px;
+  border-color:
+    rgba(
+      21,
+      101,
+      216,
+      0.2
+    );
 
+  box-shadow:
+    var(--shadow-card);
+}
+
+
+.family-card.active {
+  border-color:
+    rgba(
+      21,
+      101,
+      216,
+      0.26
+    );
+
+  background:
+    linear-gradient(
+      135deg,
+      #f2f7ff,
+      #ffffff
+    );
+}
+
+
+.family-number {
   color:
-    #b6ccea;
+    #bfd0e4;
 
   font-size: 24px;
 
@@ -483,16 +818,30 @@ function goProduct(
 }
 
 
-.chain-item strong {
+.family-card small {
   display: block;
 
-  margin-bottom: 10px;
+  margin-top: 22px;
 
-  font-size: 17px;
+  color:
+    var(--color-primary);
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.8px;
 }
 
 
-.chain-item p {
+.family-card h3 {
+  margin:
+    6px 0 10px;
+
+  font-size: 18px;
+}
+
+
+.family-card p {
   margin: 0;
 
   color:
@@ -500,24 +849,82 @@ function goProduct(
 
   font-size: 13px;
 
-  line-height: 1.6;
+  line-height: 1.75;
 }
 
 
-.chain-arrow {
-  display: flex;
+.family-count {
+  position: absolute;
 
-  align-items: center;
-  justify-content: center;
+  right: 22px;
+
+  bottom: 20px;
 
   color:
-    #b8c3d1;
+    var(--color-text-tertiary);
 
-  font-size: 22px;
+  font-size: 8px;
+
+  letter-spacing:
+    0.7px;
 }
 
 
-/* 产品列表区域 */
+.all-family {
+  background:
+    linear-gradient(
+      145deg,
+      #102b50,
+      #164f91
+    );
+}
+
+
+.all-family
+.family-number {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.35
+    );
+}
+
+
+.all-family h3 {
+  margin-top: 22px;
+
+  color: #ffffff;
+}
+
+
+.all-family p {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.6
+    );
+}
+
+
+.all-family
+.family-count {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.4
+    );
+}
+
+
+/* =====================================================
+   产品列表
+===================================================== */
 
 .product-section {
   padding:
@@ -528,22 +935,62 @@ function goProduct(
 }
 
 
-/* 分类 */
+.product-toolbar {
+  display: flex;
 
-.category-tabs {
+  align-items: flex-end;
+
+  justify-content:
+    space-between;
+
+  gap: 40px;
+
+  margin-bottom: 32px;
+}
+
+
+.product-toolbar h2 {
+  margin: 0;
+
+  font-size: 34px;
+}
+
+
+.result-text {
+  margin:
+    10px 0 0;
+
+  color:
+    var(--color-text-tertiary);
+
+  font-size: 13px;
+}
+
+
+.result-text strong {
+  margin:
+    0 4px;
+
+  color:
+    var(--color-text-primary);
+}
+
+
+.toolbar-tabs {
   display: flex;
 
   flex-wrap: wrap;
 
-  gap: 10px;
+  justify-content:
+    flex-end;
 
-  margin-bottom: 26px;
+  gap: 7px;
 }
 
 
-.category-tab {
+.toolbar-tabs button {
   padding:
-    10px 18px;
+    8px 14px;
 
   border:
     1px solid
@@ -558,60 +1005,35 @@ function goProduct(
   color:
     var(--color-text-secondary);
 
+  font-size: 12px;
+
   cursor: pointer;
 
   transition:
-    all 0.2s;
+    all
+    var(--transition-fast);
 }
 
 
-.category-tab:hover {
+.toolbar-tabs button:hover {
   color:
     var(--color-primary);
-
-  border-color:
-    rgba(
-      22,
-      119,
-      255,
-      0.35
-    );
 }
 
 
-.category-tab.active {
-  color: #ffffff;
-
+.toolbar-tabs button.active {
   border-color:
     var(--color-primary);
 
   background:
     var(--color-primary);
-}
-
-
-/* 产品数量 */
-
-.product-result {
-  margin-bottom: 20px;
 
   color:
-    var(--color-text-tertiary);
-
-  font-size: 13px;
+    #ffffff;
 }
 
 
-.product-result strong {
-  margin:
-    0 4px;
-
-  color:
-    var(--color-text-primary);
-}
-
-
-/* 产品 Grid */
+/* 产品卡片 */
 
 .product-grid {
   display: grid;
@@ -619,19 +1041,14 @@ function goProduct(
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap: 20px;
+  gap: 18px;
 }
 
 
-/* 产品卡片 */
-
 .product-card {
-  position: relative;
+  min-height: 320px;
 
-  min-height: 310px;
-
-  padding:
-    28px;
+  padding: 27px;
 
   display: flex;
 
@@ -650,9 +1067,8 @@ function goProduct(
   cursor: pointer;
 
   transition:
-    transform 0.25s,
-    box-shadow 0.25s,
-    border-color 0.25s;
+    all
+    var(--transition-normal);
 }
 
 
@@ -662,36 +1078,34 @@ function goProduct(
 
   border-color:
     rgba(
-      22,
-      119,
-      255,
-      0.2
+      21,
+      101,
+      216,
+      0.18
     );
 
   box-shadow:
-    var(--shadow-card);
+    var(--shadow-card-hover);
 }
 
 
-.product-top {
+.product-card-head {
   display: flex;
 
   align-items: center;
 
   justify-content:
     space-between;
-
-  margin-bottom: 22px;
 }
 
 
-.product-category {
+.product-index {
   color:
-    var(--color-primary);
+    #c1d1e5;
 
-  font-size: 13px;
+  font-size: 26px;
 
-  font-weight: 500;
+  font-weight: 600;
 }
 
 
@@ -703,20 +1117,32 @@ function goProduct(
     999px;
 
   background:
-    #f2f3f5;
+    #f1f3f5;
 
   color:
     var(--color-text-tertiary);
 
+  font-size: 10px;
+}
+
+
+.product-category {
+  margin-top: 30px;
+
+  color:
+    var(--color-primary);
+
   font-size: 11px;
+
+  font-weight: 500;
 }
 
 
 .product-card h3 {
   margin:
-    0 0 16px;
+    8px 0 14px;
 
-  font-size: 21px;
+  font-size: 20px;
 
   line-height: 1.45;
 }
@@ -725,50 +1151,44 @@ function goProduct(
 .product-tagline {
   margin: 0;
 
-  min-height: 76px;
-
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 13px;
 
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
-
-/* Tags */
 
 .product-tags {
   display: flex;
 
   flex-wrap: wrap;
 
-  gap: 8px;
+  gap: 6px;
 
-  margin-top: 20px;
+  margin-top: 21px;
 }
 
 
 .product-tags span {
   padding:
-    6px 10px;
+    5px 8px;
 
   border-radius:
-    6px;
+    5px;
 
   background:
-    #f3f7fd;
+    #f4f7fb;
 
   color:
-    #56708f;
+    #607186;
 
-  font-size: 12px;
+  font-size: 10px;
 }
 
 
-/* Footer */
-
-.product-footer {
+.product-card-footer {
   display: flex;
 
   align-items: center;
@@ -783,40 +1203,106 @@ function goProduct(
   color:
     var(--color-primary);
 
-  font-size: 13px;
+  font-size: 12px;
 }
 
 
-.arrow {
-  font-size: 18px;
+.product-card-footer strong {
+  font-size: 17px;
 
   transition:
-    transform 0.2s;
+    transform
+    var(--transition-fast);
 }
 
 
 .product-card:hover
-.arrow {
+.product-card-footer strong {
   transform:
     translateX(4px);
 }
 
 
-/* Responsive */
+/* =====================================================
+   CTA
+===================================================== */
 
-@media (
-  max-width: 1100px
-) {
-  .value-chain {
-    display: grid;
+.cta-section {
+  padding:
+    76px 0 100px;
+}
 
+
+.cta-box {
+  padding: 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 36px;
+
+  border-radius:
+    var(--radius-xl);
+
+  background:
+    linear-gradient(
+      135deg,
+      #edf5ff,
+      #f8fbff
+    );
+}
+
+
+.cta-box p {
+  margin:
+    0 0 9px;
+
+  color:
+    var(--color-primary);
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing:
+    1.3px;
+}
+
+
+.cta-box h2 {
+  margin:
+    0 0 12px;
+
+  font-size: 29px;
+}
+
+
+.cta-box span {
+  color:
+    var(--color-text-secondary);
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   Responsive
+===================================================== */
+
+@media (max-width: 1050px) {
+  .overview-panel {
     grid-template-columns:
-      repeat(3, 1fr);
+      1fr;
   }
 
 
-  .chain-arrow {
-    display: none;
+  .family-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
   }
 
 
@@ -827,12 +1313,44 @@ function goProduct(
 }
 
 
-@media (
-  max-width: 700px
-) {
-  .value-chain {
+@media (max-width: 760px) {
+  .section-heading {
     grid-template-columns:
       1fr;
+
+    gap: 18px;
+  }
+
+
+  .overview-panel {
+    padding: 30px;
+  }
+
+
+  .overview-chain {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  .family-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .product-toolbar {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+
+  .toolbar-tabs {
+    justify-content:
+      flex-start;
   }
 
 
@@ -842,8 +1360,12 @@ function goProduct(
   }
 
 
-  .section-header h2 {
-    font-size: 30px;
+  .cta-box {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
   }
 }
 </style>

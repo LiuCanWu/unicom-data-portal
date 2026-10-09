@@ -1,10 +1,9 @@
 <template>
   <main class="product-detail-page">
 
-    <!-- 产品存在 -->
     <template v-if="product">
 
-      <!-- 01 产品首屏 -->
+      <!-- 01 Hero -->
       <ProductHero
         :product="product"
         :category-name="categoryName"
@@ -14,7 +13,8 @@
 
 
       <!-- 02 产品价值 -->
-      <section class="page-section">
+      <section class="page-section value-section">
+
         <div class="page-container">
 
           <ProductSectionTitle
@@ -31,11 +31,17 @@
             "
             class="value-grid"
           >
+
             <article
-              v-for="value in product.values"
+              v-for="(value, index) in product.values"
               :key="value.title"
               class="value-card"
             >
+
+              <span>
+                0{{ index + 1 }}
+              </span>
+
               <h3>
                 {{ value.title }}
               </h3>
@@ -43,7 +49,9 @@
               <p>
                 {{ value.description }}
               </p>
+
             </article>
+
           </div>
 
 
@@ -55,11 +63,13 @@
           </div>
 
         </div>
+
       </section>
 
 
       <!-- 03 核心能力 -->
       <section class="page-section feature-section">
+
         <div class="page-container">
 
           <ProductSectionTitle
@@ -74,6 +84,7 @@
           />
 
         </div>
+
       </section>
 
 
@@ -83,25 +94,39 @@
           product.metrics &&
           product.metrics.length > 0
         "
-        class="metrics-section"
+        class="metric-section"
       >
+
         <div class="page-container">
 
-          <ProductSectionTitle
-            eyebrow="KEY METRICS"
-            title="关键指标"
-            description="通过规模、效率与能力指标，直观展现产品建设与应用成效。"
-          />
+          <div class="metric-heading">
+
+            <div>
+              <p>
+                KEY METRICS
+              </p>
+
+              <h2>
+                关键指标
+              </h2>
+            </div>
+
+            <span>
+              以规模、效率和能力指标，
+              展现产品建设及应用成效。
+            </span>
+
+          </div>
 
 
-          <div class="metrics-grid">
+          <div class="metric-grid">
 
             <article
               v-for="metric in product.metrics"
               :key="
                 `${metric.value}-${metric.label}`
               "
-              class="metric-card"
+              class="metric-item"
             >
 
               <strong>
@@ -123,21 +148,23 @@
           </div>
 
         </div>
+
       </section>
 
 
       <!-- 05 产品架构 -->
-      <section class="page-section">
+      <section class="page-section architecture-section">
+
         <div class="page-container">
 
           <ProductSectionTitle
             eyebrow="ARCHITECTURE"
             title="产品架构"
-            description="通过统一架构组织产品能力，并与上下游平台形成协同。"
+            description="通过统一架构组织核心能力，并与上下游数据平台和业务应用形成协同。"
           />
 
 
-          <div class="architecture-box">
+          <div class="architecture-panel">
 
             <img
               v-if="product.architectureImage"
@@ -149,38 +176,109 @@
 
             <div
               v-else
-              class="architecture-placeholder"
+              class="architecture-content"
             >
-              <span>
-                PRODUCT ARCHITECTURE
-              </span>
 
-              <strong>
-                {{ product.name }}
-              </strong>
+              <div class="architecture-main">
 
-              <p>
-                {{
-                  product.architectureDescription ||
-                  '产品架构图将在后续产品内容接入阶段补充。'
-                }}
-              </p>
+                <small>
+                  PRODUCT ARCHITECTURE
+                </small>
+
+                <h3>
+                  {{ product.name }}
+                </h3>
+
+                <p>
+                  {{
+                    product.architectureDescription ||
+                    product.description
+                  }}
+                </p>
+
+              </div>
+
+
+              <div class="architecture-flow">
+
+                <div class="architecture-node">
+                  <span>
+                    01
+                  </span>
+
+                  <strong>
+                    数据基础
+                  </strong>
+                </div>
+
+
+                <i>
+                  →
+                </i>
+
+
+                <div class="architecture-node active">
+                  <span>
+                    02
+                  </span>
+
+                  <strong>
+                    核心能力
+                  </strong>
+                </div>
+
+
+                <i>
+                  →
+                </i>
+
+
+                <div class="architecture-node">
+                  <span>
+                    03
+                  </span>
+
+                  <strong>
+                    产品服务
+                  </strong>
+                </div>
+
+
+                <i>
+                  →
+                </i>
+
+
+                <div class="architecture-node">
+                  <span>
+                    04
+                  </span>
+
+                  <strong>
+                    业务应用
+                  </strong>
+                </div>
+
+              </div>
+
             </div>
 
           </div>
 
         </div>
+
       </section>
 
 
-      <!-- 06 典型场景 -->
+      <!-- 06 场景 -->
       <section class="page-section scenario-section">
+
         <div class="page-container">
 
           <ProductSectionTitle
             eyebrow="SCENARIOS"
             title="典型应用场景"
-            description="围绕不同业务角色和行业场景，发挥产品能力价值。"
+            description="围绕真实业务角色和使用场景，发挥产品能力价值。"
           />
 
 
@@ -189,17 +287,19 @@
           />
 
         </div>
+
       </section>
 
 
       <!-- 07 产品优势 -->
       <section class="page-section advantage-section">
+
         <div class="page-container">
 
           <ProductSectionTitle
             eyebrow="ADVANTAGES"
             title="产品优势"
-            description="持续沉淀企业级数据平台技术与产品实践。"
+            description="持续沉淀企业级数据平台建设与规模化实践能力。"
           />
 
 
@@ -210,11 +310,17 @@
             "
             class="advantage-grid"
           >
+
             <article
-              v-for="advantage in product.advantages"
+              v-for="(advantage, index) in product.advantages"
               :key="advantage.title"
               class="advantage-card"
             >
+
+              <span>
+                0{{ index + 1 }}
+              </span>
+
               <h3>
                 {{ advantage.title }}
               </h3>
@@ -222,7 +328,9 @@
               <p>
                 {{ advantage.description }}
               </p>
+
             </article>
+
           </div>
 
 
@@ -230,7 +338,10 @@
             v-else
             class="advantage-grid"
           >
+
             <article class="advantage-card">
+              <span>01</span>
+
               <h3>
                 企业级
               </h3>
@@ -242,6 +353,8 @@
 
 
             <article class="advantage-card">
+              <span>02</span>
+
               <h3>
                 一体化
               </h3>
@@ -253,18 +366,21 @@
 
 
             <article class="advantage-card">
+              <span>03</span>
+
               <h3>
                 可扩展
               </h3>
 
               <p>
-                采用模块化能力设计，支持后续持续升级和扩展。
+                采用模块化能力设计，支持持续升级和扩展。
               </p>
             </article>
 
           </div>
 
         </div>
+
       </section>
 
 
@@ -276,52 +392,58 @@
         "
         class="page-section case-section"
       >
+
         <div class="page-container">
 
           <ProductSectionTitle
             eyebrow="CASES"
             title="典型案例"
-            description="结合实际建设与应用场景，展现产品落地路径与业务价值。"
+            description="结合实际建设与业务场景，展现产品落地路径和应用成效。"
           />
 
 
-          <div class="case-grid">
+          <div class="case-list">
 
             <article
               v-for="(caseItem, index) in product.cases"
               :key="caseItem.title"
-              class="case-card"
+              class="case-item"
             >
 
-              <div class="case-number">
+              <div class="case-index">
                 0{{ index + 1 }}
               </div>
 
 
-              <div class="case-content">
+              <div class="case-main">
+
+                <span>
+                  APPLICATION CASE
+                </span>
 
                 <h3>
                   {{ caseItem.title }}
                 </h3>
 
-
-                <p class="case-description">
+                <p>
                   {{ caseItem.description }}
                 </p>
 
+              </div>
 
-                <div
-                  v-if="caseItem.result"
-                  class="case-result"
-                >
-                  <span>
-                    应用成效
-                  </span>
 
-                  <p>
-                    {{ caseItem.result }}
-                  </p>
-                </div>
+              <div
+                v-if="caseItem.result"
+                class="case-result"
+              >
+
+                <small>
+                  应用成效
+                </small>
+
+                <strong>
+                  {{ caseItem.result }}
+                </strong>
 
               </div>
 
@@ -330,25 +452,28 @@
           </div>
 
         </div>
+
       </section>
 
 
-      <!-- 09 Demo / 体验 -->
+      <!-- 09 产品体验 -->
       <section class="page-section demo-section">
+
         <div class="page-container">
 
           <ProductSectionTitle
-            eyebrow="DEMO"
+            eyebrow="PRODUCT EXPERIENCE"
             title="产品体验"
-            description="通过 Demo、演示视频或独立试用环境快速了解产品能力。"
+            description="通过 Demo、视频或独立试用环境快速了解产品能力。"
           />
 
 
-          <div class="demo-box">
+          <div class="demo-panel">
 
-            <div class="demo-content">
-              <span class="demo-label">
-                PRODUCT DEMO
+            <div class="demo-copy">
+
+              <span>
+                EXPERIENCE
               </span>
 
               <h3>
@@ -356,9 +481,10 @@
               </h3>
 
               <p>
-                当前门户负责产品介绍和体验入口，
-                具体产品能力由独立产品环境提供。
+                当前门户提供统一产品介绍和体验入口，
+                实际产品能力由各独立产品环境承载。
               </p>
+
             </div>
 
 
@@ -385,16 +511,19 @@
           </div>
 
         </div>
+
       </section>
 
 
       <!-- 10 CTA -->
       <section class="cta-section">
+
         <div class="page-container">
 
           <div class="cta-box">
 
             <div>
+
               <p>
                 GET STARTED
               </p>
@@ -404,32 +533,36 @@
               </h2>
 
               <span>
-                查看产品 Demo 或申请进入独立试用环境。
+                深入了解产品能力，
+                或进入独立产品环境进行体验。
               </span>
+
             </div>
 
 
             <el-button
               type="primary"
               size="large"
-              @click="handleTrial"
+              @click="handleExperience"
             >
-              申请试用
+              查看体验入口
             </el-button>
 
           </div>
 
         </div>
+
       </section>
 
     </template>
 
 
-    <!-- 产品不存在 -->
+    <!-- 404 -->
     <section
       v-else
       class="not-found"
     >
+
       <div class="page-container">
 
         <h1>
@@ -443,12 +576,17 @@
 
         <el-button
           type="primary"
-          @click="router.push('/products')"
+          @click="
+            router.push(
+              '/products'
+            )
+          "
         >
           返回产品中心
         </el-button>
 
       </div>
+
     </section>
 
   </main>
@@ -490,37 +628,55 @@ import {
 } from '../data/productFamilies'
 
 
-const route = useRoute()
-
-const router = useRouter()
-
-
-const product = computed(() => {
-  const slug = String(
-    route.params.slug || '',
-  )
-
-  return getProductBySlug(slug)
-})
+const route =
+  useRoute()
 
 
-const categoryName = computed(() => {
-  if (!product.value) {
-    return ''
-  }
+const router =
+  useRouter()
 
-  const family =
-    productFamilies.find(
-      item =>
-        item.id ===
-        product.value?.category,
+
+const product =
+  computed(() => {
+
+    const slug =
+      String(
+        route.params.slug ||
+        '',
+      )
+
+
+    return getProductBySlug(
+      slug,
     )
+  })
 
-  return family?.name || ''
-})
+
+const categoryName =
+  computed(() => {
+
+    if (!product.value) {
+      return ''
+    }
+
+
+    const family =
+      productFamilies.find(
+        item =>
+          item.id ===
+          product.value?.category,
+      )
+
+
+    return (
+      family?.name ||
+      ''
+    )
+  })
 
 
 function handleExperience() {
+
   if (!product.value) {
     return
   }
@@ -534,6 +690,7 @@ function handleExperience() {
     demoLink?.enabled &&
     demoLink.url
   ) {
+
     window.open(
       demoLink.url,
       '_blank',
@@ -550,6 +707,7 @@ function handleExperience() {
 
 
 function handleTrial() {
+
   if (!product.value) {
     return
   }
@@ -563,6 +721,7 @@ function handleTrial() {
     trialLink?.enabled &&
     trialLink.url
   ) {
+
     window.open(
       trialLink.url,
       '_blank',
@@ -581,11 +740,20 @@ function handleTrial() {
 
 <style scoped>
 .product-detail-page {
-  background: #ffffff;
+  background:
+    #ffffff;
 }
 
 
-/* 产品价值 */
+/* =====================================================
+   产品价值
+===================================================== */
+
+.value-section {
+  background:
+    #ffffff;
+}
+
 
 .value-grid {
   display: grid;
@@ -593,12 +761,12 @@ function handleTrial() {
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap: 20px;
+  gap: 18px;
 }
 
 
 .value-card {
-  min-height: 180px;
+  min-height: 190px;
 
   padding: 28px;
 
@@ -609,13 +777,24 @@ function handleTrial() {
   border-radius:
     var(--radius-lg);
 
-  background: #ffffff;
+  background:
+    #ffffff;
+}
+
+
+.value-card > span {
+  color:
+    #bfd0e4;
+
+  font-size: 24px;
+
+  font-weight: 600;
 }
 
 
 .value-card h3 {
   margin:
-    0 0 12px;
+    28px 0 11px;
 
   font-size: 18px;
 }
@@ -627,34 +806,41 @@ function handleTrial() {
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.8;
 }
 
 
 .product-description {
-  max-width: 960px;
+  max-width: 980px;
 
-  padding: 34px;
+  padding:
+    34px 36px;
 
   border-left:
     3px solid
     var(--color-primary);
 
   background:
-    #f7faff;
+    linear-gradient(
+      90deg,
+      #f3f8ff,
+      #ffffff
+    );
 
   color:
     var(--color-text-secondary);
 
-  font-size: 17px;
+  font-size: 16px;
 
   line-height: 1.95;
 }
 
 
-/* 核心能力 */
+/* =====================================================
+   核心能力
+===================================================== */
 
 .feature-section {
   background:
@@ -662,112 +848,195 @@ function handleTrial() {
 }
 
 
-/* 关键指标 */
+/* =====================================================
+   Metrics
+===================================================== */
 
-.metrics-section {
+.metric-section {
   padding:
-    80px 0;
+    90px 0;
 
   color: #ffffff;
 
   background:
     linear-gradient(
       135deg,
-      #0d2343,
-      #123b70
+      #10233f 0%,
+      #153b68 100%
     );
 }
 
 
-.metrics-section
-:deep(.section-title .eyebrow) {
-  color: #7cb3ff;
+.metric-heading {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content:
+    space-between;
+
+  gap: 40px;
+
+  margin-bottom: 46px;
 }
 
 
-.metrics-section
-:deep(.section-title h2) {
-  color: #ffffff;
-}
+.metric-heading p {
+  margin:
+    0 0 9px;
 
-
-.metrics-section
-:deep(.section-title .description) {
   color:
-    rgba(255, 255, 255, 0.64);
+    #78acf1;
+
+  font-size: 10px;
+
+  letter-spacing:
+    1.4px;
 }
 
 
-.metrics-grid {
+.metric-heading h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 35px;
+}
+
+
+.metric-heading > span {
+  max-width: 430px;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.55
+    );
+
+  font-size: 13px;
+}
+
+
+.metric-grid {
   display: grid;
 
   grid-template-columns:
     repeat(4, 1fr);
 
-  gap: 18px;
-}
-
-
-.metric-card {
-  min-height: 170px;
-
-  padding:
-    28px 24px;
-
-  border:
+  border-top:
     1px solid
-    rgba(255, 255, 255, 0.12);
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
 
-  border-radius:
-    var(--radius-lg);
-
-  background:
-    rgba(255, 255, 255, 0.05);
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
 }
 
 
-.metric-card strong {
+.metric-item {
+  min-height: 190px;
+
+  padding: 30px;
+
+  border-right:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+}
+
+
+.metric-item:last-child {
+  border-right: 0;
+}
+
+
+.metric-item strong {
   display: block;
 
-  color:
-    #ffffff;
+  color: #ffffff;
 
-  font-size: 34px;
+  font-size: 36px;
 
-  line-height: 1.2;
+  font-weight: 600;
 }
 
 
-.metric-card h3 {
+.metric-item h3 {
   margin:
     14px 0 0;
 
   color:
-    rgba(255, 255, 255, 0.9);
+    rgba(
+      255,
+      255,
+      255,
+      0.88
+    );
 
-  font-size: 15px;
-
-  font-weight: 500;
+  font-size: 14px;
 }
 
 
-.metric-card p {
+.metric-item p {
   margin:
-    12px 0 0;
+    10px 0 0;
 
   color:
-    rgba(255, 255, 255, 0.58);
+    rgba(
+      255,
+      255,
+      255,
+      0.52
+    );
 
-  font-size: 13px;
+  font-size: 11px;
 
   line-height: 1.7;
 }
 
 
-/* 产品架构 */
+/* =====================================================
+   Architecture
+===================================================== */
 
-.architecture-box {
-  min-height: 360px;
+.architecture-section {
+  background:
+    #ffffff;
+}
+
+
+.architecture-panel {
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius:
+    var(--radius-xl);
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7faff,
+      #ffffff
+    );
 }
 
 
@@ -775,90 +1044,148 @@ function handleTrial() {
   display: block;
 
   width: 100%;
-
-  border-radius:
-    var(--radius-lg);
 }
 
 
-.architecture-placeholder {
-  min-height: 360px;
-
-  padding: 48px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  border:
-    1px dashed
-    rgba(
-      22,
-      119,
-      255,
-      0.3
-    );
-
-  border-radius:
-    var(--radius-lg);
-
-  background:
-    linear-gradient(
-      135deg,
-      #f6faff,
-      #eef5ff
-    );
+.architecture-content {
+  padding:
+    46px;
 }
 
 
-.architecture-placeholder span {
-  margin-bottom: 20px;
+.architecture-main {
+  max-width: 860px;
+}
 
+
+.architecture-main small {
   color:
     var(--color-primary);
 
-  font-size: 12px;
+  font-size: 9px;
 
-  font-weight: 600;
-
-  letter-spacing: 1px;
+  letter-spacing:
+    1.2px;
 }
 
 
-.architecture-placeholder strong {
-  font-size: 30px;
-}
-
-
-.architecture-placeholder p {
-  max-width: 760px;
-
+.architecture-main h3 {
   margin:
-    18px 0 0;
+    8px 0 14px;
+
+  font-size: 28px;
+}
+
+
+.architecture-main p {
+  margin: 0;
 
   color:
     var(--color-text-secondary);
 
-  font-size: 15px;
+  font-size: 14px;
 
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 
-/* 场景 */
+.architecture-flow {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    24px
+    1fr
+    24px
+    1fr
+    24px
+    1fr;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 42px;
+}
+
+
+.architecture-node {
+  padding:
+    20px;
+
+  border:
+    1px solid
+    var(--color-border);
+
+  border-radius:
+    12px;
+
+  background:
+    #ffffff;
+}
+
+
+.architecture-node.active {
+  border-color:
+    rgba(
+      21,
+      101,
+      216,
+      0.20
+    );
+
+  background:
+    #eef5ff;
+}
+
+
+.architecture-node span {
+  color:
+    #bfd0e4;
+
+  font-size: 14px;
+}
+
+
+.architecture-node strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color:
+    var(--color-text-primary);
+
+  font-size: 13px;
+}
+
+
+.architecture-flow i {
+  color:
+    #85a7ce;
+
+  text-align: center;
+
+  font-style: normal;
+}
+
+
+/* =====================================================
+   Scenario
+===================================================== */
 
 .scenario-section {
-  background: #ffffff;
+  background:
+    var(--color-bg-light);
 }
 
 
-/* 产品优势 */
+/* =====================================================
+   Advantage
+===================================================== */
 
 .advantage-section {
   background:
-    var(--color-bg-light);
+    #ffffff;
 }
 
 
@@ -868,12 +1195,12 @@ function handleTrial() {
   grid-template-columns:
     repeat(4, 1fr);
 
-  gap: 20px;
+  gap: 18px;
 }
 
 
 .advantage-card {
-  min-height: 170px;
+  min-height: 190px;
 
   padding: 28px;
 
@@ -884,13 +1211,24 @@ function handleTrial() {
   border-radius:
     var(--radius-lg);
 
-  background: #ffffff;
+  background:
+    #ffffff;
+}
+
+
+.advantage-card > span {
+  color:
+    #bfd0e4;
+
+  font-size: 22px;
+
+  font-weight: 600;
 }
 
 
 .advantage-card h3 {
   margin:
-    0 0 12px;
+    27px 0 11px;
 
   font-size: 18px;
 }
@@ -902,37 +1240,24 @@ function handleTrial() {
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.8;
 }
 
 
-/* 典型案例 */
+/* =====================================================
+   Case
+===================================================== */
 
 .case-section {
-  background: #ffffff;
+  background:
+    var(--color-bg-light);
 }
 
 
-.case-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 20px;
-}
-
-
-.case-card {
-  min-height: 280px;
-
-  padding: 30px;
-
-  display: flex;
-
-  gap: 24px;
+.case-list {
+  overflow: hidden;
 
   border:
     1px solid
@@ -942,95 +1267,68 @@ function handleTrial() {
     var(--radius-lg);
 
   background:
-    linear-gradient(
-      180deg,
-      #ffffff,
-      #fbfcfe
-    );
-
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
+    #ffffff;
 }
 
 
-.case-card:hover {
-  transform:
-    translateY(-4px);
+.case-item {
+  display: grid;
 
-  box-shadow:
-    var(--shadow-card);
+  grid-template-columns:
+    58px
+    minmax(280px, 1.15fr)
+    minmax(240px, 0.85fr);
+
+  align-items: center;
+
+  gap: 30px;
+
+  min-height: 190px;
+
+  padding:
+    30px;
+
+  border-bottom:
+    1px solid
+    var(--color-border-light);
 }
 
 
-.case-number {
-  flex-shrink: 0;
+.case-item:last-child {
+  border-bottom: 0;
+}
 
+
+.case-index {
   color:
-    #c4d5ea;
+    #bfd0e4;
 
-  font-size: 32px;
+  font-size: 25px;
 
   font-weight: 600;
 }
 
 
-.case-content {
-  flex: 1;
-}
-
-
-.case-content h3 {
-  margin:
-    3px 0 14px;
-
-  font-size: 20px;
-
-  line-height: 1.45;
-}
-
-
-.case-description {
-  margin: 0;
-
-  color:
-    var(--color-text-secondary);
-
-  font-size: 14px;
-
-  line-height: 1.85;
-}
-
-
-.case-result {
-  margin-top: 22px;
-
-  padding:
-    16px 18px;
-
-  border-radius:
-    var(--radius-md);
-
-  background:
-    #f2f7ff;
-}
-
-
-.case-result span {
-  display: block;
-
-  margin-bottom: 7px;
-
+.case-main > span {
   color:
     var(--color-primary);
 
-  font-size: 12px;
+  font-size: 8px;
 
-  font-weight: 600;
+  letter-spacing:
+    0.9px;
 }
 
 
-.case-result p {
+.case-main h3 {
+  margin:
+    7px 0 10px;
+
+  font-size: 19px;
+}
+
+
+.case-main p {
   margin: 0;
 
   color:
@@ -1038,20 +1336,59 @@ function handleTrial() {
 
   font-size: 13px;
 
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 
-/* Demo */
+.case-result {
+  padding:
+    20px 22px;
+
+  border-radius:
+    12px;
+
+  background:
+    #f2f7ff;
+}
+
+
+.case-result small {
+  color:
+    var(--color-primary);
+
+  font-size: 9px;
+}
+
+
+.case-result strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color:
+    var(--color-text-secondary);
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  line-height: 1.75;
+}
+
+
+/* =====================================================
+   Demo
+===================================================== */
 
 .demo-section {
   background:
-    var(--color-bg-light);
+    #ffffff;
 }
 
 
-.demo-box {
-  padding: 42px;
+.demo-panel {
+  padding:
+    40px 42px;
 
   display: flex;
 
@@ -1070,39 +1407,42 @@ function handleTrial() {
     var(--radius-lg);
 
   background:
-    #ffffff;
+    linear-gradient(
+      135deg,
+      #f7faff,
+      #ffffff
+    );
 }
 
 
-.demo-label {
+.demo-copy > span {
   color:
     var(--color-primary);
 
-  font-size: 12px;
+  font-size: 9px;
 
-  font-weight: 600;
-
-  letter-spacing: 1px;
+  letter-spacing:
+    1.1px;
 }
 
 
-.demo-content h3 {
+.demo-copy h3 {
   margin:
-    12px 0 12px;
+    8px 0 10px;
 
-  font-size: 24px;
+  font-size: 23px;
 }
 
 
-.demo-content p {
-  max-width: 680px;
+.demo-copy p {
+  max-width: 650px;
 
   margin: 0;
 
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.8;
 }
@@ -1111,13 +1451,15 @@ function handleTrial() {
 .demo-actions {
   display: flex;
 
-  gap: 12px;
+  gap: 10px;
 
   flex-shrink: 0;
 }
 
 
-/* CTA */
+/* =====================================================
+   CTA
+===================================================== */
 
 .cta-section {
   padding:
@@ -1135,32 +1477,31 @@ function handleTrial() {
   justify-content:
     space-between;
 
-  gap: 30px;
+  gap: 36px;
 
   border-radius:
-    var(--radius-lg);
+    var(--radius-xl);
 
   background:
     linear-gradient(
       135deg,
       #eef5ff,
-      #f7faff
+      #f8fbff
     );
 }
 
 
 .cta-box p {
   margin:
-    0 0 10px;
+    0 0 9px;
 
   color:
     var(--color-primary);
 
-  font-size: 12px;
+  font-size: 10px;
 
-  font-weight: 600;
-
-  letter-spacing: 1px;
+  letter-spacing:
+    1.3px;
 }
 
 
@@ -1168,13 +1509,15 @@ function handleTrial() {
   margin:
     0 0 12px;
 
-  font-size: 30px;
+  font-size: 29px;
 }
 
 
 .cta-box span {
   color:
     var(--color-text-secondary);
+
+  font-size: 14px;
 }
 
 
@@ -1204,58 +1547,116 @@ function handleTrial() {
 }
 
 
-/* Responsive */
+/* =====================================================
+   Responsive
+===================================================== */
 
 @media (max-width: 1000px) {
-  .metrics-grid {
-    grid-template-columns:
-      repeat(2, 1fr);
-  }
-
-
+  .metric-grid,
   .advantage-grid {
     grid-template-columns:
       repeat(2, 1fr);
   }
-}
 
 
-@media (max-width: 900px) {
-  .value-grid {
+  .metric-item:nth-child(2),
+  .advantage-card:nth-child(2) {
+    border-right: 0;
+  }
+
+
+  .architecture-flow {
     grid-template-columns:
       repeat(2, 1fr);
   }
 
 
-  .case-grid {
-    grid-template-columns: 1fr;
+  .architecture-flow i {
+    display: none;
   }
 
 
-  .demo-box,
-  .cta-box {
-    flex-direction: column;
+  .case-item {
+    grid-template-columns:
+      50px 1fr;
+  }
 
-    align-items: flex-start;
+
+  .case-result {
+    grid-column:
+      2;
   }
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   .value-grid,
-  .metrics-grid,
+  .metric-grid,
   .advantage-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
 
-  .case-card {
-    flex-direction: column;
+  .metric-heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
   }
 
 
-  .demo-actions {
-    flex-direction: column;
+  .metric-item {
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        0.12
+      );
+  }
+
+
+  .metric-item:last-child {
+    border-bottom: 0;
+  }
+
+
+  .architecture-content {
+    padding: 30px;
+  }
+
+
+  .architecture-flow {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .case-item {
+    grid-template-columns:
+      1fr;
+
+    gap: 16px;
+  }
+
+
+  .case-result {
+    grid-column: auto;
+  }
+
+
+  .demo-panel,
+  .cta-box {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
   }
 }
 </style>

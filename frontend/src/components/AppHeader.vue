@@ -1,32 +1,42 @@
 <template>
   <header class="app-header">
-    <div class="header-inner">
-      <router-link
-        to="/"
+    <div class="header-container">
+
+      <!-- Brand -->
+      <div
         class="brand"
+        @click="router.push('/')"
       >
+
         <div class="brand-mark">
           U
         </div>
 
         <div class="brand-text">
-          <span class="brand-title">
-            联通数据智能
-          </span>
 
-          <span class="brand-subtitle">
+          <strong>
+            联通数据智能
+          </strong>
+
+          <span>
             Data Intelligence
           </span>
-        </div>
-      </router-link>
 
+        </div>
+
+      </div>
+
+
+      <!-- Navigation -->
       <nav class="nav">
+
         <router-link
           to="/"
           class="nav-item"
         >
           首页
         </router-link>
+
 
         <router-link
           to="/products"
@@ -35,12 +45,14 @@
           产品
         </router-link>
 
+
         <router-link
           to="/experience"
           class="nav-item"
         >
           体验中心
         </router-link>
+
 
         <router-link
           to="/solutions"
@@ -49,168 +61,306 @@
           解决方案
         </router-link>
 
+
         <router-link
           to="/about"
           class="nav-item"
         >
           关于我们
         </router-link>
+
       </nav>
 
+
+      <!-- Actions -->
       <div class="header-actions">
-        <el-button>
+
+        <el-button
+          text
+          @click="handleContact"
+        >
           联系我们
         </el-button>
 
+
         <el-button
           type="primary"
-          @click="goExperience"
+          @click="
+            router.push(
+              '/experience'
+            )
+          "
         >
-          立即体验
+          体验产品
         </el-button>
+
       </div>
+
+
+      <!-- Mobile -->
+      <button
+        class="mobile-menu"
+        type="button"
+        aria-label="菜单"
+      >
+        ☰
+      </button>
+
     </div>
   </header>
 </template>
 
+
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import {
+  ElMessage,
+} from 'element-plus'
 
-const router = useRouter()
+import {
+  useRouter,
+} from 'vue-router'
 
-function goExperience() {
-  router.push('/experience')
+
+const router =
+  useRouter()
+
+
+function handleContact() {
+  ElMessage.info(
+    '联系我们入口将在后续版本接入。',
+  )
 }
 </script>
+
 
 <style scoped>
 .app-header {
   position: sticky;
+
   top: 0;
-  z-index: 1000;
 
-  height: var(--header-height);
+  z-index: 100;
 
-  background:
-    rgba(255, 255, 255, 0.94);
+  height:
+    var(--header-height);
 
   border-bottom:
-    1px solid var(--color-border);
+    1px solid
+    rgba(231, 235, 240, 0.82);
 
-  backdrop-filter: blur(12px);
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  backdrop-filter:
+    blur(18px);
 }
 
-.header-inner {
+
+.header-container {
   width: 100%;
-  max-width: var(--page-max-width);
+
+  max-width:
+    var(--page-max-width);
 
   height: 100%;
 
-  margin: 0 auto;
-  padding: 0 var(--page-padding-x);
+  margin:
+    0 auto;
+
+  padding:
+    0 var(--page-padding-x);
 
   display: flex;
+
   align-items: center;
 }
+
+
+/* Brand */
 
 .brand {
   display: flex;
+
   align-items: center;
-  gap: 10px;
+
+  gap: 12px;
 
   flex-shrink: 0;
+
+  cursor: pointer;
 }
+
 
 .brand-mark {
   width: 36px;
   height: 36px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
   border-radius: 10px;
 
   color: #ffffff;
-  background: var(--color-primary);
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d57c7,
+      #277ceb
+    );
+
+  font-size: 18px;
 
   font-weight: 700;
-  font-size: 20px;
+
+  box-shadow:
+    0 6px 16px
+    rgba(21, 101, 216, 0.2);
 }
+
 
 .brand-text {
   display: flex;
+
   flex-direction: column;
+
+  line-height: 1.25;
 }
 
-.brand-title {
+
+.brand-text strong {
+  color:
+    var(--color-text-primary);
+
   font-size: 15px;
-  line-height: 20px;
+
   font-weight: 600;
 }
 
-.brand-subtitle {
+
+.brand-text span {
+  margin-top: 3px;
+
+  color:
+    var(--color-text-tertiary);
+
   font-size: 10px;
-  line-height: 14px;
-  color: var(--color-text-tertiary);
+
+  letter-spacing:
+    0.5px;
 }
+
+
+/* Navigation */
 
 .nav {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
 
-  margin-left: 56px;
+  margin-left: 64px;
 }
+
 
 .nav-item {
   position: relative;
 
-  padding: 21px 14px;
+  padding:
+    22px 14px;
+
+  color:
+    var(--color-text-secondary);
 
   font-size: 14px;
 
-  color: var(--color-text-secondary);
+  font-weight: 500;
 
-  transition: color 0.2s;
+  transition:
+    color
+    var(--transition-fast);
 }
+
 
 .nav-item:hover {
-  color: var(--color-primary);
+  color:
+    var(--color-primary);
 }
 
-.nav-item.router-link-active {
-  color: var(--color-primary);
-  font-weight: 500;
+
+.nav-item.router-link-exact-active {
+  color:
+    var(--color-primary);
 }
 
-.nav-item.router-link-active::after {
-  content: "";
 
+.nav-item.router-link-exact-active::after {
   position: absolute;
+
   left: 14px;
   right: 14px;
+
   bottom: 0;
 
   height: 2px;
 
-  background: var(--color-primary);
+  border-radius:
+    2px;
+
+  background:
+    var(--color-primary);
+
+  content: "";
 }
+
+
+/* Actions */
 
 .header-actions {
-  display: flex;
-  gap: 12px;
-
   margin-left: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
 }
 
-@media (max-width: 900px) {
-  .nav {
+
+/* Mobile */
+
+.mobile-menu {
+  display: none;
+
+  margin-left: auto;
+
+  border: 0;
+
+  background: transparent;
+
+  color:
+    var(--color-text-primary);
+
+  font-size: 24px;
+
+  cursor: pointer;
+}
+
+
+@media (
+  max-width: 980px
+) {
+  .nav,
+  .header-actions {
     display: none;
   }
 
-  .header-actions {
-    display: none;
+
+  .mobile-menu {
+    display: block;
   }
 }
 </style>

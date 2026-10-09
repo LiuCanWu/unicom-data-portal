@@ -1,31 +1,40 @@
 <template>
   <main class="experience-page">
 
-    <!-- 01 Hero -->
+    <!-- =====================================================
+         01 Hero
+    ====================================================== -->
     <PageHero
       eyebrow="EXPERIENCE CENTER"
       title="数据智能产品体验中心"
-      description="集中展示联通数据智能产品 Demo、产品视频及独立试用环境入口，帮助用户快速理解产品能力与应用价值。"
+      description="通过产品演示、视频讲解与独立试用环境，快速了解产品能力、业务场景与实际应用价值。"
     />
 
 
-    <!-- 02 体验方式 -->
-    <section class="page-section">
+    <!-- =====================================================
+         02 体验方式
+    ====================================================== -->
+    <section class="experience-mode-section">
+
       <div class="page-container">
 
-        <div class="section-header">
-          <p>
-            EXPERIENCE MODE
+        <div class="section-heading">
+
+          <div>
+            <p class="section-eyebrow">
+              EXPERIENCE MODE
+            </p>
+
+            <h2>
+              从了解产品到深入体验
+            </h2>
+          </div>
+
+          <p class="section-description">
+            根据不同产品成熟度，
+            逐步提供轻量演示、视频介绍与真实产品环境。
           </p>
 
-          <h2>
-            多种方式快速了解产品
-          </h2>
-
-          <span>
-            根据产品当前建设情况，
-            逐步提供演示、视频和独立试用环境。
-          </span>
         </div>
 
 
@@ -33,12 +42,17 @@
 
           <article
             v-for="mode in experienceModes"
-            :key="mode.title"
+            :key="mode.number"
             class="mode-card"
           >
-            <div class="mode-icon">
+
+            <div class="mode-number">
               {{ mode.number }}
             </div>
+
+            <small>
+              {{ mode.english }}
+            </small>
 
             <h3>
               {{ mode.title }}
@@ -53,42 +67,50 @@
         </div>
 
       </div>
+
     </section>
 
 
-    <!-- 03 重点体验 -->
+    <!-- =====================================================
+         03 重点体验
+    ====================================================== -->
     <section class="featured-section">
+
       <div class="page-container">
 
-        <div class="section-header">
-          <p>
-            FEATURED
+        <div class="section-heading">
+
+          <div>
+            <p class="section-eyebrow">
+              FEATURED EXPERIENCE
+            </p>
+
+            <h2>
+              重点产品体验
+            </h2>
+          </div>
+
+          <p class="section-description">
+            优先呈现数据智能产品家族中的核心产品能力与典型使用路径。
           </p>
 
-          <h2>
-            重点产品体验
-          </h2>
-
-          <span>
-            优先呈现数据智能产品家族中的核心产品能力。
-          </span>
         </div>
 
 
         <div class="featured-grid">
 
           <article
-            v-for="item in featuredExperiences"
+            v-for="(item, index) in featuredExperiences"
             :key="item.id"
             class="featured-card"
           >
 
-            <div class="featured-top">
+            <div class="featured-card-head">
 
-              <span class="experience-type">
+              <span class="featured-index">
                 {{
-                  getTypeName(
-                    item.type
+                  formatNumber(
+                    index + 1
                   )
                 }}
               </span>
@@ -108,20 +130,15 @@
             </div>
 
 
-            <div class="featured-visual">
-
-              <span>
-                PRODUCT EXPERIENCE
-              </span>
-
-              <strong>
-                {{ item.title }}
-              </strong>
-
-            </div>
-
-
             <div class="featured-content">
+
+              <small>
+                {{
+                  getTypeName(
+                    item.type
+                  )
+                }}
+              </small>
 
               <h3>
                 {{ item.title }}
@@ -132,7 +149,7 @@
               </p>
 
 
-              <div class="tags">
+              <div class="featured-tags">
 
                 <span
                   v-for="tag in item.tags"
@@ -143,209 +160,13 @@
 
               </div>
 
-
-              <div class="card-actions">
-
-                <el-button
-                  type="primary"
-                  @click="
-                    handleExperience(
-                      item
-                    )
-                  "
-                >
-                  {{
-                    item.status ===
-                    'available'
-                      ? '立即体验'
-                      : '查看介绍'
-                  }}
-                </el-button>
-
-
-                <el-button
-                  @click="
-                    goProduct(
-                      item.productId
-                    )
-                  "
-                >
-                  产品详情
-                </el-button>
-
-              </div>
-
-            </div>
-
-          </article>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- 04 全部体验资源 -->
-    <section class="page-section resource-section">
-      <div class="page-container">
-
-        <div class="resource-header">
-
-          <div class="section-header">
-            <p>
-              ALL EXPERIENCE
-            </p>
-
-            <h2>
-              全部体验资源
-            </h2>
-
-            <span>
-              根据产品类型快速查找体验入口。
-            </span>
-          </div>
-
-
-          <div class="filter-tabs">
-
-            <button
-              class="filter-tab"
-              :class="{
-                active:
-                  selectedType ===
-                  'all'
-              }"
-              @click="
-                selectedType = 'all'
-              "
-            >
-              全部
-            </button>
-
-
-            <button
-              class="filter-tab"
-              :class="{
-                active:
-                  selectedType ===
-                  'demo'
-              }"
-              @click="
-                selectedType = 'demo'
-              "
-            >
-              产品演示
-            </button>
-
-
-            <button
-              class="filter-tab"
-              :class="{
-                active:
-                  selectedType ===
-                  'video'
-              }"
-              @click="
-                selectedType = 'video'
-              "
-            >
-              视频讲解
-            </button>
-
-
-            <button
-              class="filter-tab"
-              :class="{
-                active:
-                  selectedType ===
-                  'trial'
-              }"
-              @click="
-                selectedType = 'trial'
-              "
-            >
-              独立试用
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div class="resource-count">
-          共
-          <strong>
-            {{ filteredExperiences.length }}
-          </strong>
-          项体验资源
-        </div>
-
-
-        <div
-          v-if="
-            filteredExperiences.length > 0
-          "
-          class="resource-grid"
-        >
-
-          <article
-            v-for="item in filteredExperiences"
-            :key="item.id"
-            class="resource-card"
-          >
-
-            <div class="resource-top">
-
-              <div>
-                <span class="experience-type">
-                  {{
-                    getTypeName(
-                      item.type
-                    )
-                  }}
-                </span>
-
-                <h3>
-                  {{ item.title }}
-                </h3>
-              </div>
-
-
-              <span
-                class="status"
-                :class="item.status"
-              >
-                {{
-                  getStatusName(
-                    item.status
-                  )
-                }}
-              </span>
-
             </div>
 
 
-            <p>
-              {{ item.description }}
-            </p>
-
-
-            <div class="resource-tags">
-
-              <span
-                v-for="tag in item.tags"
-                :key="tag"
-              >
-                {{ tag }}
-              </span>
-
-            </div>
-
-
-            <div class="resource-actions">
+            <div class="featured-footer">
 
               <button
-                class="text-button"
+                type="button"
                 @click="
                   handleExperience(
                     item
@@ -364,6 +185,206 @@
                 </span>
               </button>
 
+
+              <button
+                type="button"
+                class="secondary-link"
+                @click="
+                  goProduct(
+                    item.productId
+                  )
+                "
+              >
+                产品详情
+              </button>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         04 全部资源
+    ====================================================== -->
+    <section class="resource-section">
+
+      <div class="page-container">
+
+        <div class="resource-toolbar">
+
+          <div>
+
+            <p class="section-eyebrow">
+              ALL EXPERIENCE
+            </p>
+
+            <h2>
+              全部体验资源
+            </h2>
+
+            <p>
+              共
+              <strong>
+                {{ filteredExperiences.length }}
+              </strong>
+              项资源
+            </p>
+
+          </div>
+
+
+          <div class="filter-tabs">
+
+            <button
+              type="button"
+              :class="{
+                active:
+                  selectedType === 'all'
+              }"
+              @click="
+                selectedType = 'all'
+              "
+            >
+              全部
+            </button>
+
+            <button
+              type="button"
+              :class="{
+                active:
+                  selectedType === 'demo'
+              }"
+              @click="
+                selectedType = 'demo'
+              "
+            >
+              产品演示
+            </button>
+
+            <button
+              type="button"
+              :class="{
+                active:
+                  selectedType === 'video'
+              }"
+              @click="
+                selectedType = 'video'
+              "
+            >
+              视频讲解
+            </button>
+
+            <button
+              type="button"
+              :class="{
+                active:
+                  selectedType === 'trial'
+              }"
+              @click="
+                selectedType = 'trial'
+              "
+            >
+              独立试用
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          v-if="
+            filteredExperiences.length > 0
+          "
+          class="resource-list"
+        >
+
+          <article
+            v-for="(item, index) in filteredExperiences"
+            :key="item.id"
+            class="resource-item"
+          >
+
+            <div class="resource-index">
+              {{
+                formatNumber(
+                  index + 1
+                )
+              }}
+            </div>
+
+
+            <div class="resource-main">
+
+              <span>
+                {{
+                  getTypeName(
+                    item.type
+                  )
+                }}
+              </span>
+
+              <h3>
+                {{ item.title }}
+              </h3>
+
+              <p>
+                {{ item.description }}
+              </p>
+
+            </div>
+
+
+            <div class="resource-tags">
+
+              <span
+                v-for="tag in item.tags"
+                :key="tag"
+              >
+                {{ tag }}
+              </span>
+
+            </div>
+
+
+            <div class="resource-action">
+
+              <span
+                class="status"
+                :class="item.status"
+              >
+                {{
+                  getStatusName(
+                    item.status
+                  )
+                }}
+              </span>
+
+
+              <button
+                type="button"
+                @click="
+                  handleExperience(
+                    item
+                  )
+                "
+              >
+                {{
+                  item.status ===
+                  'available'
+                    ? '进入体验'
+                    : '查看产品'
+                }}
+
+                →
+              </button>
+
             </div>
 
           </article>
@@ -375,170 +396,119 @@
           v-else
           class="empty-state"
         >
+          <span>
+            EXPERIENCE RESOURCE
+          </span>
+
           <strong>
             当前暂无该类型体验资源
           </strong>
 
           <p>
-            后续将根据各产品建设情况持续接入。
+            后续将根据产品建设情况持续开放。
           </p>
         </div>
 
       </div>
+
     </section>
 
 
-    <!-- 05 体验流程 -->
+    <!-- =====================================================
+         05 体验流程
+    ====================================================== -->
     <section class="process-section">
+
       <div class="page-container">
 
-        <div class="section-header light">
-          <p>
-            HOW TO START
-          </p>
+        <div class="process-heading">
 
-          <h2>
-            快速开始产品体验
-          </h2>
+          <div>
+            <p>
+              HOW TO START
+            </p>
+
+            <h2>
+              四步完成产品体验
+            </h2>
+          </div>
 
           <span>
-            从了解产品到进入独立体验环境，
-            保持简单清晰的体验链路。
+            保持简单清晰的体验路径，
+            从产品了解逐步进入真实环境。
           </span>
+
         </div>
 
 
         <div class="process-grid">
 
-          <div class="process-item">
+          <article
+            v-for="step in processSteps"
+            :key="step.number"
+            class="process-item"
+          >
             <span>
-              01
+              {{ step.number }}
             </span>
 
             <h3>
-              选择产品
+              {{ step.title }}
             </h3>
 
             <p>
-              根据业务需求选择需要了解的数据智能产品。
+              {{ step.description }}
             </p>
-          </div>
-
-
-          <div class="process-arrow">
-            →
-          </div>
-
-
-          <div class="process-item">
-            <span>
-              02
-            </span>
-
-            <h3>
-              查看演示
-            </h3>
-
-            <p>
-              通过 Demo、截图或视频快速理解产品核心能力。
-            </p>
-          </div>
-
-
-          <div class="process-arrow">
-            →
-          </div>
-
-
-          <div class="process-item">
-            <span>
-              03
-            </span>
-
-            <h3>
-              申请试用
-            </h3>
-
-            <p>
-              对需要深入体验的产品申请独立试用环境。
-            </p>
-          </div>
-
-
-          <div class="process-arrow">
-            →
-          </div>
-
-
-          <div class="process-item">
-            <span>
-              04
-            </span>
-
-            <h3>
-              深入体验
-            </h3>
-
-            <p>
-              跳转至产品独立环境体验真实产品功能。
-            </p>
-          </div>
+          </article>
 
         </div>
 
       </div>
+
     </section>
 
 
-    <!-- 06 CTA -->
+    <!-- =====================================================
+         06 CTA
+    ====================================================== -->
     <section class="cta-section">
+
       <div class="page-container">
 
         <div class="cta-box">
 
           <div>
             <p>
-              START NOW
+              EXPLORE PRODUCTS
             </p>
 
             <h2>
-              找到适合你的数据智能产品
+              先了解产品，再选择合适的体验方式
             </h2>
 
             <span>
-              从产品介绍开始，
-              逐步了解和体验核心能力。
+              浏览完整产品体系，
+              查看产品定位、核心能力和典型场景。
             </span>
           </div>
 
 
-          <div class="cta-actions">
-
-            <el-button
-              type="primary"
-              size="large"
-              @click="
-                router.push(
-                  '/products'
-                )
-              "
-            >
-              浏览全部产品
-            </el-button>
-
-
-            <el-button
-              size="large"
-              @click="handleTrial"
-            >
-              申请试用
-            </el-button>
-
-          </div>
+          <el-button
+            type="primary"
+            size="large"
+            @click="
+              router.push(
+                '/products'
+              )
+            "
+          >
+            浏览全部产品
+          </el-button>
 
         </div>
 
       </div>
+
     </section>
 
   </main>
@@ -550,10 +520,6 @@ import {
   computed,
   ref,
 } from 'vue'
-
-import {
-  ElMessage,
-} from 'element-plus'
 
 import {
   useRouter,
@@ -577,7 +543,8 @@ import type {
 } from '../types/experience'
 
 
-const router = useRouter()
+const router =
+  useRouter()
 
 
 type ExperienceFilter =
@@ -619,21 +586,69 @@ const filteredExperiences =
 const experienceModes = [
   {
     number: '01',
-    title: '产品演示',
+
+    english:
+      'PRODUCT DEMO',
+
+    title:
+      '产品演示',
+
     description:
-      '通过交互式 Demo 或功能演示快速了解产品核心操作和能力。',
+      '通过预置场景快速了解产品核心能力和主要操作路径。',
+  },
+
+  {
+    number: '02',
+
+    english:
+      'VIDEO',
+
+    title:
+      '视频讲解',
+
+    description:
+      '通过产品介绍和操作视频快速理解产品定位与业务价值。',
+  },
+
+  {
+    number: '03',
+
+    english:
+      'TRIAL',
+
+    title:
+      '独立试用',
+
+    description:
+      '进入真实产品环境，自主验证产品功能与业务适配情况。',
+  },
+]
+
+
+const processSteps = [
+  {
+    number: '01',
+    title: '选择产品',
+    description:
+      '根据业务需求找到需要了解的数据智能产品。',
   },
   {
     number: '02',
-    title: '视频讲解',
+    title: '查看演示',
     description:
-      '通过产品介绍、操作演示和典型场景视频快速理解产品价值。',
+      '通过Demo或视频快速了解核心产品能力。',
   },
   {
     number: '03',
-    title: '独立试用',
+    title: '申请试用',
     description:
-      '进入各产品独立试用环境，实际体验产品核心功能。',
+      '对于需要深入验证的产品申请独立体验环境。',
+  },
+  {
+    number: '04',
+    title: '深入体验',
+    description:
+      '进入真实产品环境验证业务场景与产品能力。',
   },
 ]
 
@@ -661,13 +676,26 @@ function getStatusName(
 }
 
 
+function formatNumber(
+  index: number,
+) {
+  return String(
+    index,
+  ).padStart(
+    2,
+    '0',
+  )
+}
+
+
 function goProduct(
   productId: string,
 ) {
   const product =
     products.find(
       item =>
-        item.id === productId,
+        item.id ===
+        productId,
     )
 
 
@@ -704,13 +732,6 @@ function handleExperience(
     item.productId,
   )
 }
-
-
-function handleTrial() {
-  ElMessage.info(
-    '试用申请入口将在后续版本统一接入。',
-  )
-}
 </script>
 
 
@@ -721,51 +742,46 @@ function handleTrial() {
 }
 
 
-/* Section Header */
+/* =====================================================
+   Common
+===================================================== */
 
-.section-header {
-  max-width: 760px;
+.section-heading {
+  display: grid;
 
-  margin-bottom: 44px;
+  grid-template-columns:
+    1fr 1fr;
+
+  align-items: end;
+
+  gap: 80px;
+
+  margin-bottom: 46px;
 }
 
 
-.section-header > p {
-  margin:
-    0 0 10px;
-
-  color:
-    var(--color-primary);
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  letter-spacing: 1px;
-}
-
-
-.section-header h2 {
-  margin:
-    0 0 16px;
+.section-heading h2 {
+  margin: 0;
 
   font-size: 36px;
-
-  line-height: 1.3;
 }
 
 
-.section-header span {
-  color:
-    var(--color-text-secondary);
-
-  font-size: 16px;
-
-  line-height: 1.8;
+.section-heading
+.section-description {
+  margin: 0;
 }
 
 
-/* 体验方式 */
+/* =====================================================
+   Experience Mode
+===================================================== */
+
+.experience-mode-section {
+  padding:
+    82px 0;
+}
+
 
 .mode-grid {
   display: grid;
@@ -773,14 +789,14 @@ function handleTrial() {
   grid-template-columns:
     repeat(3, 1fr);
 
-  gap: 20px;
+  gap: 17px;
 }
 
 
 .mode-card {
-  min-height: 210px;
+  min-height: 225px;
 
-  padding: 30px;
+  padding: 28px;
 
   border:
     1px solid
@@ -794,32 +810,34 @@ function handleTrial() {
 }
 
 
-.mode-icon {
-  width: 44px;
-  height: 44px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 26px;
-
-  border-radius: 10px;
-
-  background:
-    #eef5ff;
-
+.mode-number {
   color:
-    var(--color-primary);
+    #bdd0e7;
+
+  font-size: 27px;
 
   font-weight: 600;
 }
 
 
+.mode-card small {
+  display: block;
+
+  margin-top: 28px;
+
+  color:
+    var(--color-primary);
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.8px;
+}
+
+
 .mode-card h3 {
   margin:
-    0 0 12px;
+    5px 0 11px;
 
   font-size: 19px;
 }
@@ -831,17 +849,19 @@ function handleTrial() {
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.8;
 }
 
 
-/* 重点体验 */
+/* =====================================================
+   Featured
+===================================================== */
 
 .featured-section {
   padding:
-    80px 0;
+    82px 0;
 
   background:
     var(--color-bg-light);
@@ -852,14 +872,20 @@ function handleTrial() {
   display: grid;
 
   grid-template-columns:
-    repeat(2, 1fr);
+    repeat(3, 1fr);
 
-  gap: 22px;
+  gap: 18px;
 }
 
 
 .featured-card {
-  overflow: hidden;
+  min-height: 350px;
+
+  padding: 27px;
+
+  display: flex;
+
+  flex-direction: column;
 
   border:
     1px solid
@@ -872,24 +898,21 @@ function handleTrial() {
     #ffffff;
 
   transition:
-    transform 0.25s,
-    box-shadow 0.25s;
+    all
+    var(--transition-normal);
 }
 
 
 .featured-card:hover {
   transform:
-    translateY(-5px);
+    translateY(-4px);
 
   box-shadow:
-    var(--shadow-card);
+    var(--shadow-card-hover);
 }
 
 
-.featured-top {
-  padding:
-    18px 22px;
-
+.featured-card-head {
   display: flex;
 
   align-items: center;
@@ -899,11 +922,11 @@ function handleTrial() {
 }
 
 
-.experience-type {
+.featured-index {
   color:
-    var(--color-primary);
+    #bfd0e4;
 
-  font-size: 12px;
+  font-size: 25px;
 
   font-weight: 600;
 }
@@ -916,164 +939,171 @@ function handleTrial() {
   border-radius:
     999px;
 
-  font-size: 11px;
+  font-size: 9px;
 }
 
 
 .status.available {
   color:
-    #16794a;
+    #14764b;
 
   background:
-    #edf9f3;
+    #edf8f3;
 }
 
 
 .status.preparing {
   color:
-    #8a6d2f;
+    #8b7138;
 
   background:
-    #fff7e6;
-}
-
-
-.featured-visual {
-  min-height: 190px;
-
-  padding: 30px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content:
-    flex-end;
-
-  color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #102a50,
-      #1677ff
-    );
-}
-
-
-.featured-visual span {
-  margin-bottom: auto;
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.5
-    );
-
-  font-size: 11px;
-
-  letter-spacing: 1.4px;
-}
-
-
-.featured-visual strong {
-  font-size: 25px;
-
-  line-height: 1.4;
+    #f7f3e9;
 }
 
 
 .featured-content {
-  padding: 26px;
+  margin-top: 28px;
+}
+
+
+.featured-content small {
+  color:
+    var(--color-primary);
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.8px;
 }
 
 
 .featured-content h3 {
   margin:
-    0 0 12px;
+    7px 0 13px;
 
   font-size: 20px;
 }
 
 
 .featured-content > p {
-  min-height: 74px;
-
   margin: 0;
 
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.8;
 }
 
 
-.tags,
-.resource-tags {
+.featured-tags {
   display: flex;
 
   flex-wrap: wrap;
 
-  gap: 8px;
+  gap: 6px;
 
   margin-top: 20px;
 }
 
 
-.tags span,
-.resource-tags span {
+.featured-tags span {
   padding:
-    6px 10px;
+    5px 8px;
 
-  border-radius: 6px;
+  border-radius:
+    5px;
 
   background:
-    #f3f7fd;
+    #f3f7fb;
 
   color:
-    #56708f;
+    #607186;
 
-  font-size: 12px;
+  font-size: 10px;
 }
 
 
-.card-actions {
+.featured-footer {
   display: flex;
 
-  gap: 10px;
-
-  margin-top: 24px;
-}
-
-
-/* 全部体验 */
-
-.resource-section {
-  background:
-    #ffffff;
-}
-
-
-.resource-header {
-  display: flex;
-
-  align-items:
-    flex-end;
+  align-items: center;
 
   justify-content:
     space-between;
 
-  gap: 30px;
+  gap: 12px;
+
+  margin-top: auto;
+
+  padding-top: 26px;
 }
 
 
-.resource-header
-.section-header {
-  margin-bottom: 28px;
+.featured-footer button {
+  padding: 0;
+
+  border: 0;
+
+  background:
+    transparent;
+
+  color:
+    var(--color-primary);
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+
+.featured-footer
+.secondary-link {
+  color:
+    var(--color-text-tertiary);
+}
+
+
+/* =====================================================
+   Resource
+===================================================== */
+
+.resource-section {
+  padding:
+    84px 0 100px;
+}
+
+
+.resource-toolbar {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content:
+    space-between;
+
+  gap: 40px;
+
+  margin-bottom: 30px;
+}
+
+
+.resource-toolbar h2 {
+  margin: 0;
+
+  font-size: 34px;
+}
+
+
+.resource-toolbar > div:first-child > p:last-child {
+  margin:
+    10px 0 0;
+
+  color:
+    var(--color-text-tertiary);
+
+  font-size: 12px;
 }
 
 
@@ -1082,15 +1112,13 @@ function handleTrial() {
 
   flex-wrap: wrap;
 
-  gap: 8px;
-
-  margin-bottom: 28px;
+  gap: 7px;
 }
 
 
-.filter-tab {
+.filter-tabs button {
   padding:
-    9px 16px;
+    8px 14px;
 
   border:
     1px solid
@@ -1105,11 +1133,13 @@ function handleTrial() {
   color:
     var(--color-text-secondary);
 
+  font-size: 12px;
+
   cursor: pointer;
 }
 
 
-.filter-tab.active {
+.filter-tabs button.active {
   border-color:
     var(--color-primary);
 
@@ -1121,43 +1151,10 @@ function handleTrial() {
 }
 
 
-.resource-count {
-  margin-bottom: 20px;
+/* 列表式资源 */
 
-  color:
-    var(--color-text-tertiary);
-
-  font-size: 13px;
-}
-
-
-.resource-count strong {
-  margin:
-    0 4px;
-
-  color:
-    var(--color-text-primary);
-}
-
-
-.resource-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 20px;
-}
-
-
-.resource-card {
-  min-height: 300px;
-
-  padding: 26px;
-
-  display: flex;
-
-  flex-direction: column;
+.resource-list {
+  overflow: hidden;
 
   border:
     1px solid
@@ -1171,50 +1168,111 @@ function handleTrial() {
 }
 
 
-.resource-top {
-  display: flex;
+.resource-item {
+  display: grid;
 
-  align-items:
-    flex-start;
+  grid-template-columns:
+    55px
+    minmax(240px, 1.1fr)
+    minmax(180px, 0.9fr)
+    120px;
 
-  justify-content:
-    space-between;
+  align-items: center;
 
-  gap: 16px;
+  gap: 25px;
+
+  min-height: 150px;
+
+  padding:
+    24px 28px;
+
+  border-bottom:
+    1px solid
+    var(--color-border-light);
 }
 
 
-.resource-card h3 {
-  margin:
-    9px 0 0;
-
-  font-size: 19px;
-
-  line-height: 1.45;
+.resource-item:last-child {
+  border-bottom: 0;
 }
 
 
-.resource-card > p {
+.resource-index {
+  color:
+    #bfd0e4;
+
+  font-size: 24px;
+
+  font-weight: 600;
+}
+
+
+.resource-main > span {
+  color:
+    var(--color-primary);
+
+  font-size: 9px;
+}
+
+
+.resource-main h3 {
   margin:
-    18px 0 0;
+    5px 0 8px;
+
+  font-size: 17px;
+}
+
+
+.resource-main p {
+  margin: 0;
 
   color:
     var(--color-text-secondary);
 
-  font-size: 14px;
+  font-size: 12px;
 
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 
-.resource-actions {
-  margin-top: auto;
+.resource-tags {
+  display: flex;
 
-  padding-top: 24px;
+  flex-wrap: wrap;
+
+  gap: 6px;
 }
 
 
-.text-button {
+.resource-tags span {
+  padding:
+    5px 8px;
+
+  border-radius:
+    5px;
+
+  background:
+    #f4f7fb;
+
+  color:
+    #617288;
+
+  font-size: 9px;
+}
+
+
+.resource-action {
+  display: flex;
+
+  align-items: flex-end;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+
+.resource-action button {
   padding: 0;
 
   border: 0;
@@ -1225,22 +1283,17 @@ function handleTrial() {
   color:
     var(--color-primary);
 
-  font-size: 13px;
+  font-size: 11px;
 
   cursor: pointer;
 }
 
 
-.text-button span {
-  margin-left: 5px;
-}
-
+/* Empty */
 
 .empty-state {
   padding:
-    80px 30px;
-
-  text-align: center;
+    90px 30px;
 
   border:
     1px dashed
@@ -1251,78 +1304,121 @@ function handleTrial() {
 
   background:
     var(--color-bg-light);
+
+  text-align: center;
+}
+
+
+.empty-state > span {
+  color:
+    var(--color-primary);
+
+  font-size: 8px;
+
+  letter-spacing:
+    1px;
 }
 
 
 .empty-state strong {
+  display: block;
+
+  margin-top: 12px;
+
   font-size: 18px;
 }
 
 
 .empty-state p {
   margin:
-    12px 0 0;
+    10px 0 0;
 
   color:
     var(--color-text-secondary);
+
+  font-size: 13px;
 }
 
 
-/* 体验流程 */
+/* =====================================================
+   Process
+===================================================== */
 
 .process-section {
   padding:
-    80px 0;
+    88px 0;
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
   background:
     linear-gradient(
       135deg,
-      #0d2343,
-      #123b70
+      #10233f,
+      #153b68
     );
 }
 
 
-.section-header.light > p {
-  color:
-    #7cb3ff;
+.process-heading {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content:
+    space-between;
+
+  gap: 50px;
+
+  margin-bottom: 48px;
 }
 
 
-.section-header.light h2 {
+.process-heading p {
+  margin:
+    0 0 10px;
+
   color:
-    #ffffff;
+    #77acf2;
+
+  font-size: 10px;
+
+  letter-spacing:
+    1.4px;
 }
 
 
-.section-header.light span {
+.process-heading h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 35px;
+}
+
+
+.process-heading > span {
+  max-width: 430px;
+
   color:
     rgba(
       255,
       255,
       255,
-      0.64
+      0.55
     );
+
+  font-size: 13px;
 }
 
 
 .process-grid {
-  display: flex;
+  display: grid;
 
-  align-items: stretch;
+  grid-template-columns:
+    repeat(4, 1fr);
 
-  gap: 16px;
-}
-
-
-.process-item {
-  flex: 1;
-
-  padding: 26px;
-
-  border:
+  border-top:
     1px solid
     rgba(
       255,
@@ -1331,34 +1427,54 @@ function handleTrial() {
       0.12
     );
 
-  border-radius:
-    var(--radius-lg);
-
-  background:
+  border-bottom:
+    1px solid
     rgba(
       255,
       255,
       255,
-      0.04
+      0.12
     );
+}
+
+
+.process-item {
+  min-height: 200px;
+
+  padding: 27px;
+
+  border-right:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+}
+
+
+.process-item:last-child {
+  border-right: 0;
 }
 
 
 .process-item > span {
   color:
-    #7cb3ff;
+    #77acf2;
 
-  font-size: 25px;
-
-  font-weight: 600;
+  font-size: 23px;
 }
 
 
 .process-item h3 {
   margin:
-    24px 0 10px;
+    30px 0 10px;
 
-  font-size: 18px;
+  color:
+    #ffffff;
+
+  font-size: 17px;
 }
 
 
@@ -1370,33 +1486,18 @@ function handleTrial() {
       255,
       255,
       255,
-      0.62
+      0.55
     );
 
-  font-size: 13px;
+  font-size: 12px;
 
   line-height: 1.8;
 }
 
 
-.process-arrow {
-  display: flex;
-
-  align-items: center;
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.35
-    );
-
-  font-size: 20px;
-}
-
-
-/* CTA */
+/* =====================================================
+   CTA
+===================================================== */
 
 .cta-section {
   padding:
@@ -1405,7 +1506,7 @@ function handleTrial() {
 
 
 .cta-box {
-  padding: 52px;
+  padding: 50px;
 
   display: flex;
 
@@ -1414,32 +1515,31 @@ function handleTrial() {
   justify-content:
     space-between;
 
-  gap: 30px;
+  gap: 36px;
 
   border-radius:
-    var(--radius-lg);
+    var(--radius-xl);
 
   background:
     linear-gradient(
       135deg,
       #eef5ff,
-      #f7faff
+      #f8fbff
     );
 }
 
 
 .cta-box p {
   margin:
-    0 0 10px;
+    0 0 9px;
 
   color:
     var(--color-primary);
 
-  font-size: 12px;
+  font-size: 10px;
 
-  font-weight: 600;
-
-  letter-spacing: 1px;
+  letter-spacing:
+    1.3px;
 }
 
 
@@ -1447,61 +1547,102 @@ function handleTrial() {
   margin:
     0 0 12px;
 
-  font-size: 30px;
+  font-size: 29px;
 }
 
 
 .cta-box span {
   color:
     var(--color-text-secondary);
+
+  font-size: 14px;
 }
 
 
-.cta-actions {
-  display: flex;
+/* =====================================================
+   Responsive
+===================================================== */
 
-  gap: 12px;
-
-  flex-shrink: 0;
-}
-
-
-/* Responsive */
-
-@media (max-width: 1000px) {
-  .resource-grid {
+@media (max-width: 1050px) {
+  .featured-grid {
     grid-template-columns:
       repeat(2, 1fr);
   }
 
 
-  .process-grid {
-    display: grid;
-
+  .resource-item {
     grid-template-columns:
-      repeat(2, 1fr);
+      50px 1fr 120px;
   }
 
 
-  .process-arrow {
+  .resource-tags {
     display: none;
   }
 }
 
 
-@media (max-width: 800px) {
-  .mode-grid,
-  .featured-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 780px) {
+  .section-heading {
+    grid-template-columns:
+      1fr;
+
+    gap: 18px;
   }
 
 
-  .resource-header {
+  .mode-grid,
+  .featured-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .resource-toolbar {
     align-items:
       flex-start;
 
     flex-direction:
       column;
+  }
+
+
+  .resource-item {
+    grid-template-columns:
+      1fr;
+
+    gap: 12px;
+  }
+
+
+  .resource-index {
+    font-size: 20px;
+  }
+
+
+  .resource-action {
+    align-items:
+      flex-start;
+  }
+
+
+  .process-heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+
+  .process-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  .process-item:nth-child(2) {
+    border-right: 0;
   }
 
 
@@ -1515,17 +1656,29 @@ function handleTrial() {
 }
 
 
-@media (max-width: 600px) {
-  .resource-grid,
+@media (max-width: 520px) {
   .process-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
 
-  .cta-actions {
-    flex-direction: column;
+  .process-item {
+    border-right: 0;
 
-    align-items: flex-start;
+    border-bottom:
+      1px solid
+      rgba(
+        255,
+        255,
+        255,
+        0.12
+      );
+  }
+
+
+  .process-item:last-child {
+    border-bottom: 0;
   }
 }
 </style>
