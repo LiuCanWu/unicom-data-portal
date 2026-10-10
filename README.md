@@ -53,3 +53,28 @@
 2. 全链路数据智能生产流水线
 3. AI 高质量数据集
 4. 专家级数据智能体
+
+## 6. 项目现状与后续规划
+
+当前代码状态、方案架构图、已完成能力、风险和分阶段待办见：
+
+- [项目现状与后续规划](docs/PROJECT_STATUS.md)
+
+## 7. 本地启动
+
+前端：
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+后端：
+
+```bash
+cd backend
+python -m uvicorn app.main:app --reload
+```
+
+后端健康检查地址：`http://localhost:8000/api/health`。前端 API 地址可通过 `VITE_API_BASE_URL` 配置。
