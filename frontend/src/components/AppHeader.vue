@@ -15,7 +15,7 @@
         <div class="brand-text">
 
           <strong>
-            联通数据智能
+            联通星瀚大数据
           </strong>
 
           <span>
@@ -113,10 +113,6 @@
 
 <script setup lang="ts">
 import {
-  ElMessage,
-} from 'element-plus'
-
-import {
   useRouter,
 } from 'vue-router'
 
@@ -126,9 +122,7 @@ const router =
 
 
 function handleContact() {
-  ElMessage.info(
-    '联系我们入口将在后续版本接入。',
-  )
+  router.push('/contact')
 }
 </script>
 

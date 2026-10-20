@@ -6,6 +6,7 @@ import ProductDetailView from '../views/ProductDetailView.vue'
 import ExperienceView from '../views/ExperienceView.vue'
 import SolutionsView from '../views/SolutionsView.vue'
 import AboutView from '../views/AboutView.vue'
+import ContactView from '../views/ContactView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
@@ -46,6 +47,12 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView,
+    },
+
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactView,
     },
 
     {
