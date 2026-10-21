@@ -164,18 +164,29 @@
           />
 
 
-          <div class="architecture-panel">
+          <div
+            class="architecture-panel"
+            :class="{ 'has-image': product.architectureImage }"
+          >
 
-            <img
+            <el-image
               v-if="product.architectureImage"
               :src="product.architectureImage"
               :alt="`${product.name}产品架构`"
+              :preview-src-list="[product.architectureImage]"
+              :preview-teleported="true"
+              fit="contain"
               class="architecture-image"
+              :class="{ 'data-agent-architecture': product.slug === 'data-agent' }"
             />
+
+            <p v-if="product.architectureImage" class="architecture-image-hint">
+              点击图片查看大图
+            </p>
 
 
             <div
-              v-else
+              v-if="!product.architectureImage"
               class="architecture-content"
             >
 
@@ -1044,6 +1055,40 @@ function handleTrial() {
   display: block;
 
   width: 100%;
+
+  max-width: 100%;
+
+  margin: 0 auto;
+
+  cursor: zoom-in;
+}
+
+.architecture-image.data-agent-architecture {
+  width: 50%;
+}
+
+.architecture-panel.has-image {
+  padding: 20px 20px 12px;
+
+  background: #ffffff;
+}
+
+.architecture-image :deep(.el-image__inner) {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+}
+
+.architecture-image-hint {
+  margin: 12px 0 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 12px;
+
+  text-align: center;
 }
 
 
@@ -1590,6 +1635,10 @@ function handleTrial() {
 
 
 @media (max-width: 760px) {
+  .architecture-image.data-agent-architecture {
+    width: 100%;
+  }
+
   .value-grid,
   .metric-grid,
   .advantage-grid {
