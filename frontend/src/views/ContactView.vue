@@ -5,7 +5,7 @@
       <div class="visual-copy">
         <p class="visual-kicker">UNICOM DATA INTELLIGENCE</p>
         <h1>连接数据智能，<br /><span>开启业务新可能</span></h1>
-        <p>填写您的需求，我们的产品顾问将尽快与您联系，为您提供合适的产品与解决方案建议。</p>
+        <p>产品咨询通道正在准备中，开放时间请以正式通知为准。</p>
       </div>
 
       <div class="product-scene" aria-hidden="true">
@@ -28,10 +28,11 @@
         <header class="form-heading">
           <p>BUSINESS CONSULTATION</p>
           <h2>业务咨询</h2>
-          <span>即刻开启数据智能之旅，获取专属咨询服务</span>
+          <span>咨询通道正在准备中，暂不收集联系信息</span>
         </header>
 
-        <el-form ref="formRef" :model="form" :rules="rules" label-position="left" label-width="108px" class="contact-form">
+        <p v-if="!contactApiEnabled" class="form-note">在线咨询功能尚未开通。请通过已确认的线下渠道联系产品团队。</p>
+        <el-form v-else ref="formRef" :model="form" :rules="rules" label-position="left" label-width="108px" class="contact-form">
           <el-form-item label="联系人" prop="name" required>
             <el-input v-model="form.name" placeholder="请输入联系人姓名" maxlength="30" />
           </el-form-item>
@@ -58,7 +59,6 @@
           <el-button type="primary" class="submit-button" :loading="submitting" @click="submitForm">提交咨询</el-button>
         </el-form>
 
-        <p class="form-note">提交后，产品顾问会在 1 个工作日内与您联系<br />如需紧急协助，请致电 <a href="tel:400-034-7888">400-034-7888</a></p>
       </div>
     </section>
   </div>
@@ -68,6 +68,9 @@
 import { computed, onBeforeUnmount, reactive, ref } from 'vue'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import { createContact } from '../api/contacts'
+
+// 静态演示站不提供联系人收集；待真实 API、短信验证和公开文案核准后另行启用。
+const contactApiEnabled = false
 
 const formRef = ref<FormInstance>()
 const submitting = ref(false)

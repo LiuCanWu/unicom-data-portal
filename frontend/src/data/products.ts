@@ -639,7 +639,7 @@ export const products: Product[] = [
     },
   ],
 
-  architectureImage: '/images/products/data-agent-architecture.png',
+  architectureImage: `${import.meta.env.BASE_URL}images/products/data-agent-architecture.png`,
 
   architectureDescription:
     '底层接入数据库、数据文件和数据接口，在通用能力层提供语义理解、代码生成、知识检索、数据语义和业务本体等能力，并构建智能体记忆体系；上层形成智能问数、智能报表、智能报告和智能分析四类应用能力，统一通过PC、移动端和小程序服务不同业务角色。',
