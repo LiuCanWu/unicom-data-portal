@@ -1,10 +1,31 @@
-/frontend/node_modules/
-/frontend/dist/
-/frontend/*.tsbuildinfo
-/deploy/packages/
-/backend/.venv/
-**/__pycache__/
-*.py[cod]
+# Node.js / Vue / Vite
+node_modules/
+dist/
+frontend/node_modules/
+frontend/dist/
+.vite/
+
+# Python / FastAPI
+.venv/
+venv/
+__pycache__/
+*.pyc/
+.pytest_cache/
+
+# 环境变量与密钥
 .env
 .env.*
 !.env.example
+!.env.*.example
+
+# 编辑器和系统文件
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+
+# 构建缓存
+*.tsbuildinfo
