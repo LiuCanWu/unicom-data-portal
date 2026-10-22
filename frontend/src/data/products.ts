@@ -71,6 +71,8 @@ export const products: Product[] = [
       },
     ],
 
+    architectureImage: `${import.meta.env.BASE_URL}images/products/lakehouse-architecture.png`,
+
     architectureDescription:
       '以国产化基础设施为底座，向上构建统一存储层和湖仓一体能力，统一承载结构化、半结构化和非结构化数据；计算层融合离线批计算、实时流计算和交互式分析等多类引擎，并通过统一元数据、权限和资源调度能力，为经营分析、实时营销、自助取数及AI开发等场景提供数据支撑。',
 
@@ -950,6 +952,8 @@ export const products: Product[] = [
         '支持企业内部空间以及外部行业、城市等可信数据空间连接。',
     },
   ],
+
+  architectureImage: `${import.meta.env.BASE_URL}images/products/trusted-data-space-architecture.png`,
 
   architectureDescription:
     '以湖仓一体、数据开发、数据资产、数据治理和开放共享等数据中台能力为基础，通过连接器连接供数方与用数方，并在上层建设空间入驻认证、控制、运营、清算和场景等能力，实现数据产品接入、发布、订购、可信交付、使用控制和空间互联。',
