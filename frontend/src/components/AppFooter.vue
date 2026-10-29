@@ -65,10 +65,25 @@
         <span>
           当前为产品门户 MVP
         </span>
+
+        <span>
+          本站累计访问量：{{ visitCount === null ? '暂无统计数据' : `${visitCount.toLocaleString('zh-CN')} 次` }}
+        </span>
       </div>
     </div>
   </footer>
 </template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { getSiteVisitCount } from '../utils/siteVisitCounter'
+
+const visitCount = ref<number | null>(null)
+
+onMounted(async () => {
+  visitCount.value = await getSiteVisitCount()
+})
+</script>
 
 <style scoped>
 .app-footer {
@@ -163,6 +178,8 @@
 .footer-bottom {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
 
   margin-top: 48px;
   padding-top: 24px;
