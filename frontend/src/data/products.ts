@@ -128,7 +128,7 @@ export const products: Product[] = [
         label: '算力节点',
       },
       {
-        value: '360PB+',
+        value: '800PB+',
         label: '数据存储规模',
       },
       {
@@ -300,11 +300,11 @@ export const products: Product[] = [
       label: '质量评价维度',
     },
     {
-      value: '74项',
-      label: '数据质检项',
+      value: '500TB+',
+      label: '高质量数据集规模',
     },
     {
-      value: '75%+',
+      value: '90%+',
       label: '智能化生产占比',
     },
   ],
@@ -694,16 +694,20 @@ export const products: Product[] = [
 
   metrics: [
     {
-      value: '3类',
-      label: '核心用户角色',
+      value: '≥99%',
+      label: '语义理解准确率',
     },
     {
-      value: '4项',
-      label: '核心产品能力',
+      value: '≥98%',
+      label: '数据准确率',
     },
     {
-      value: '4阶段',
-      label: '数据分析方法论',
+      value: '国际领先',
+      label: '院士专家鉴定',
+    },
+        {
+      value: '6项',
+      label: '省部级奖项',
     },
   ],
 
@@ -1011,12 +1015,12 @@ export const products: Product[] = [
 
   metrics: [
     {
-      value: '12个',
-      label: '省分密态计算接入',
+      value: '2200+',
+      label: '空间接入主体',
     },
     {
-      value: '5类',
-      label: '业务场景',
+      value: '1300+',
+      label: '数据产品',
     },
     {
       value: '24种',
@@ -1175,20 +1179,20 @@ export const products: Product[] = [
 
   metrics: [
     {
-      value: '5大',
-      label: '能力中心',
+      value: '超百亿元',
+      label: '数据价值评估',
     },
     {
-      value: '12项',
-      label: '业务功能',
+      value: '超1000个',
+      label: '价值评估场景',
     },
     {
-      value: '7类',
-      label: '成本核算规则',
+      value: '万亿级',
+      label: '数据流通计量',
     },
     {
-      value: '3类',
-      label: '定价模型',
+      value: '9项',
+      label: '荣获省部级奖项',
     },
   ],
 
