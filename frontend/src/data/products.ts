@@ -241,6 +241,7 @@ export const products: Product[] = [
     },
   ],
 
+  architectureImage: `${import.meta.env.BASE_URL}images/products/data-pipeline.png`,
   architectureDescription:
     '以多源异构数据为输入，通过统一数据采集、开发加工、智能算子、质量检测和任务调度形成标准化数据生产流水线，并向结构化数据应用和高质量AI数据集等不同场景持续供给标准化数据。',
 
@@ -472,6 +473,7 @@ export const products: Product[] = [
     },
   ],
 
+  architectureImage: `${import.meta.env.BASE_URL}images/products/ontology-studio.png`,
   architectureDescription:
     '以数仓、数据湖和数据中台资产为数据基础，通过对象、规则、行动建模形成企业业务本体，并完成数据映射与动态实例生成；向上将本体封装为标准语义查询、推理和行动服务，为智能体及各类智能业务应用提供统一语义层。',
 
@@ -1123,6 +1125,7 @@ export const products: Product[] = [
     },
   ],
 
+  architectureImage: `${import.meta.env.BASE_URL}images/products/data-pricing.png`,
   architectureDescription:
     '平台围绕成本管理、收益管理、定价管理、计费管理和价值管理五大能力中心建设，底层自动接入成本、项目、流通、收益和价值等数据，上层支撑成本核算、收益洞察、数据资产定价、流通计量计费及运营价值透视等业务。',
 
