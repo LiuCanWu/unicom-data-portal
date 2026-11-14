@@ -1,4 +1,4 @@
-// Hash 路由共用一个站点标识，路由切换不增加 PV。
+// Hash 路由共用项目首页路径，路由切换不增加 PV。
 // 模块级 Promise 保证同一次页面加载中，即使 Footer 重新挂载也只上报一次。
 let visitCountRequest: Promise<number | null> | undefined
 
@@ -13,18 +13,16 @@ async function requestSiteVisitCount(): Promise<number | null> {
     return null
   }
 
-  // GitHub Pages 的多个项目共用 github.io，站点标识必须包含项目子路径。
-  const basePath = import.meta.env.BASE_URL.split('/').filter(Boolean)
-  const siteKey = [window.location.hostname, ...basePath].join('-').toLowerCase()
-  const url = new URL('https://api.yuki-can.top/counter/pv')
-  url.searchParams.set('site', siteKey)
-  url.searchParams.set('inc', '1')
+  // 不蒜子按 URL 统计页面 PV；固定为项目路径，避免把路由 Hash 算作不同页面。
+  const siteUrl = new URL(import.meta.env.BASE_URL, window.location.origin).href
 
   const controller = new AbortController()
-  const timeout = window.setTimeout(() => controller.abort(), 12000)
+  const timeout = window.setTimeout(() => controller.abort(), 8000)
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch('https://cdn.busuanzi.cc/api.php', {
+      method: 'POST',
+      body: JSON.stringify({ url: siteUrl, referrer: '' }),
       credentials: 'omit',
       referrerPolicy: 'no-referrer',
       cache: 'no-store',
@@ -34,12 +32,11 @@ async function requestSiteVisitCount(): Promise<number | null> {
     if (!response.ok) return null
 
     const data: unknown = await response.json()
-    if (typeof data !== 'object' || data === null || !('count' in data) ||
-      !('site' in data) || data.site !== siteKey) {
+    if (typeof data !== 'object' || data === null || !('busuanzi_page_pv' in data)) {
       return null
     }
 
-    const value = data.count
+    const value = data.busuanzi_page_pv
     const count = typeof value === 'number'
       ? value
       : typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : NaN
